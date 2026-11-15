@@ -2,6 +2,11 @@
 
 버전은 `src-tauri/tauri.conf.json`·`src-tauri/Cargo.toml`의 version. 배포판 `README.txt`의 "바뀐 점"과 같은 내용이다.
 
+## 0.16.20
+
+- 필터 "커버 없는 것만"에 Switch·3DS처럼 롬 속 아이콘으로 그려지는 게임이 섞여 나오던 문제 수정.
+  아이콘이 있는 게임은 "커버 있는 것만" 쪽에만 나옵니다.
+
 ## 0.16.19
 
 - BizHawk PC엔진 코어 고르기: 에뮬레이터 탭의 BizHawk 카드에서 TurboNyma·HyperNyma·PCEHawk 중 고르면,

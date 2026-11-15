@@ -401,6 +401,8 @@ function iconArt(cid){const c=CONS[cid]||UNKNOWN; return `<div class="art icon">
 /* 롬 파일 안에서 꺼낸 타이틀 이미지(아이콘)를 기기 색 바탕 가운데에 놓는다 */
 function embArt(rom){const c=CONS[rom.console]||UNKNOWN; return `<div class="art icon emb${rom.console==='nds'?' px':''}"><img src="${esc(api.fileSrc(rom.icon))}" alt="" loading="lazy" decoding="async" draggable="false" data-c="${esc(rom.console)}"><span class="ic-name">${esc(c.short)}</span></div>`}
 function nxArt(rom){const src=esc(api.fileSrc(rom.icon)); return `<div class="art nxart"><img class="bg" src="${src}" alt="" loading="lazy" decoding="async" draggable="false"><img class="fg" src="${src}" alt="" loading="lazy" decoding="async" draggable="false"></div>`}
+/* 케이스에 그림(커버·박스아트·롬 속 아이콘)이 들어가는지. 필터 '커버 있는/없는 것만'의 기준 */
+function hasArt(rom){return !!(rom.cover||rom.autoCover||rom.boxart||rom.icon)}
 function coverOf(rom){const p=rom.cover||rom.autoCover||rom.boxart; if(!p)return null; return /^(https?|asset|data|file):/i.test(p)?p:api.fileSrc(p)}
 function boxHTML(rom,{mini}={}){
   const c=CONS[rom.console]||UNKNOWN; const unk=rom.console==='unknown'; const cv=coverOf(rom);
@@ -488,8 +490,9 @@ function applyFlt(r){
   if(f.decades?.length) r=r.filter(x=>f.decades.includes(decadeOf(x.year)));
   if(f.official) r=r.filter(x=>!x.variant);
   if(f.runnable) r=r.filter(x=>emuFor(x));
-  if(f.covered) r=r.filter(x=>x.cover||x.autoCover||x.boxart||x.icon);
-  if(f.nocover) r=r.filter(x=>!x.cover&&!x.autoCover&&!x.boxart);
+  // 롬에서 꺼낸 아이콘(Switch·3DS·NDS 등)으로 그려지는 게임도 커버가 있는 것으로 본다
+  if(f.covered) r=r.filter(x=>hasArt(x));
+  if(f.nocover) r=r.filter(x=>!hasArt(x));
   if(f.played) r=r.filter(x=>(x.plays||0)>0||(x.playSeconds||0)>0);
   if(f.unplayed) r=r.filter(x=>!(x.plays||0)&&!(x.playSeconds||0));
   return r;

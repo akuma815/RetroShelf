@@ -1,6 +1,6 @@
 [package]
 name = "retroshelf"
-version = "0.16.19"
+version = "0.16.20"
 description = "게임 케이스 진열장 형태의 멀티 에뮬레이터 프론트엔드"
 edition = "2021"
 rust-version = "1.77"
