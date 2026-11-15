@@ -1054,24 +1054,24 @@ mod np2_tests {
         let f2 = d.join("한글폰트.bmp"); fs::write(&f2, b"BM").unwrap();
         // 1) ini 없음 → 섹션부터 만든다
         np2_set_font(path_string(&exe), path_string(&f1), None).unwrap();
-        println!("{:?}", fs::read_to_string(d.join("np21x64w.ini")).unwrap());
+        println!("{:?}", from_ansi(&fs::read(d.join("np21x64w.ini")).unwrap()));
         // 2) 기존 ini 값 바꾸기 (CRLF 유지, 다른 줄 그대로)
         fs::write(d.join("np21x64w.ini"), b"[NekoProject21]\r\nWindposx=10\r\nfontfile=C:\\old.bmp\r\nclk_mult=4\r\n").unwrap();
         let (v, prev) = np2_set_font(path_string(&exe), path_string(&f2), None).unwrap(); assert_eq!(prev.as_deref(), Some("C:\\old.bmp"));
-        let t = fs::read_to_string(d.join("np21x64w.ini")).unwrap(); println!("{v} {t:?}");
+        let t = from_ansi(&fs::read(d.join("np21x64w.ini")).unwrap()); println!("{v} {t:?}");
         assert!(t.contains("Windposx=10\r\n") && t.contains("clk_mult=4\r\n") && (t.contains("retroshelf_font.bmp") || t.contains(&v)) && !t.contains("old.bmp"));
         // 3) fontfile 줄이 없으면 첫 섹션 아래에
         fs::write(d.join("np21x64w.ini"), b"[NekoProject21]\r\nclk_mult=4\r\n").unwrap();
         np2_set_font(path_string(&exe), path_string(&f1), None).unwrap();
-        let t = fs::read_to_string(d.join("np21x64w.ini")).unwrap(); println!("{t:?}");
+        let t = from_ansi(&fs::read(d.join("np21x64w.ini")).unwrap()); println!("{t:?}");
         assert!(t.starts_with("[NekoProject21]\r\nfontfile="));
         // 4) 원래 값으로 되돌리기 (빈 값 포함)
         np2_set_font(path_string(&exe), "".into(), Some(true)).unwrap();
-        assert!(fs::read_to_string(d.join("np21x64w.ini")).unwrap().contains("fontfile=\r\n"));
+        assert!(from_ansi(&fs::read(d.join("np21x64w.ini")).unwrap()).contains("fontfile=\r\n"));
         // 5) 하드디스크 키 여러 개: 없던 키는 None, 있던 키는 원래 값
         let p = np2_ini_write(&exe, &[("HDD1FILE".into(), "D:\\PC98\\rusty.hdi".into()), ("fontfile".into(), "".into())]).unwrap();
         assert_eq!(p, vec![None, Some("".into())]);
-        let t = fs::read_to_string(d.join("np21x64w.ini")).unwrap(); println!("{t:?}");
+        let t = from_ansi(&fs::read(d.join("np21x64w.ini")).unwrap()); println!("{t:?}");
         assert!(t.contains("HDD1FILE=D:\\PC98\\rusty.hdi\r\n"));
     }
 }
