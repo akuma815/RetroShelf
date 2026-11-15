@@ -34,6 +34,10 @@ Rust(Tauri 2)로 만들었습니다. 화면은 Windows에 들어 있는 WebView2
 ## 자동 인식 규칙
 
 **에뮬레이터**: 실행 파일 이름으로 찾습니다. RetroArch, DuckStation, PCSX2, RPCS3, shadPS4(PS4 전용), Kyty(PS4·PS5, `--game 게임폴더`로 실행), Vita3K, Flycast, Redream, Supermodel, Cemu, Azahar, Lime3DS, Citra, Stella, openMSX, blueMSX, TeknoParrot, Dolphin, PPSSPP, Ryujinx, KenjiNX, Eden, Citron, yuzu 계열, Eglantine, Lichii, xemu, Cxbx-Reloaded, Xenia, mGBA, SameBoy, melonDS, DeSmuME, Mesen, FCEUX, Snes9x, bsnes, Project64, simple64, RMG(Rosalie's Mupen GUI), BlastEm, Kega Fusion, Mesen-S, VisualBoyAdvance-M, NO$GBA, Nestopia, puNES, ePSXe, fMSX, ares, Mednafen, MAME, FBNeo, BizHawk를 알아봅니다. 스캔 폴더 밖이라도 `C:\Program Files` 같은 기본 설치 위치에 있는 openMSX, blueMSX, Project64, Dolphin, PCSX2, PPSSPP 등은 찾아 줍니다. ares와 Kega Fusion은 실행 인수의 `{sys}` 자리에 기종 지정(`--system "Mega CD"`, `-scd` 등)이 들어갑니다. RetroArch는 `cores` 폴더의 `*_libretro.dll`로 돌릴 수 있는 콘솔을 판단합니다. 목록에 없는 프로그램도 쓸 수 있습니다.
+- 그 밖에 정확도가 높은 단독 에뮬레이터도 알아봅니다: simple64(simple64X 포함), gopher64, Mupen64Plus, NanoBoyAdvance, SkyEmu, BGB, Gambatte, WideMelon, Panda3DS, PCSX-Redux, Play!, ClownMDEmu, Ymir, Hollycast, Geargrafx.
+- exe의 **버전 정보**(제품 이름·파일 설명·원래 파일 이름)도 봅니다. exe 이름을 바꿔 둬도 알아보고, 같은 에뮬레이터가 여럿이면 제품 이름이 정확히 같은 본체를 고릅니다. TeknoParrot 폴더 안의 아케이드 기판용 변형판(PCSX2x6, RPCS3, Play! 등)은 다른 곳에 같은 에뮬레이터가 없을 때만 씁니다.
+- 이름표에 없는 exe라도 버전 정보에 "emulator"가 들어 있으면 **자동 추정** 에뮬레이터로 넣고, 설명의 낱말(예: "Nintendo DS emulator")로 콘솔을 추정합니다. 콘솔을 모르면 에뮬레이터 탭에서 고르면 되고, 빼면 다음 스캔에서 다시 넣지 않습니다.
+- 콘솔마다 **에뮬레이션 정확도가 높은 순서**로 자동 지정합니다(예: N64는 ares › simple64 › gopher64 › RMG › … › Project64). 기종별 순서는 [사용 설명서 9.6](docs/manual.md#96-자동-지정-우선순위)에 있습니다.
 - 에뮬레이터 탭의 콘솔 줄에서 **실행 파일 직접 지정**(또는 선택 상자의 **다른 실행 파일 직접 고르기…**)을 누르면, 고른 exe가 그 콘솔의 에뮬레이터가 됩니다.
 - 게임 정보 창에서도 그 게임만 다른 exe로 실행하도록 고를 수 있습니다.
 - 직접 지정한 에뮬레이터는 이름, 실행할 콘솔, 실행 인수를 바꿀 수 있습니다.

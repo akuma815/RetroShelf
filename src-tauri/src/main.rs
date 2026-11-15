@@ -291,6 +291,52 @@ fn installed_emus() -> Vec<String> {
     } }
     out
 }
+/* 실행 파일의 버전 정보(제품 이름·설명·원래 파일 이름). 이름표에 없는 에뮬레이터를 알아보고,
+   같은 에뮬레이터 후보가 여럿일 때 진짜 본체를 고르는 데 쓴다. 버전 정보가 없으면 None */
+#[derive(Serialize, Default)]
+struct ExeInfo { product: String, desc: String, orig: String, internal: String }
+#[cfg(windows)]
+fn exe_info(path: &str) -> Option<ExeInfo> {
+    use windows_sys::Win32::Storage::FileSystem::{GetFileVersionInfoSizeW, GetFileVersionInfoW, VerQueryValueW};
+    let wide = |s: &str| s.encode_utf16().chain(std::iter::once(0)).collect::<Vec<u16>>();
+    let wpath = wide(path);
+    unsafe {
+        let mut h = 0u32;
+        let n = GetFileVersionInfoSizeW(wpath.as_ptr(), &mut h);
+        if n == 0 { return None }
+        let mut buf = vec![0u8; n as usize];
+        if GetFileVersionInfoW(wpath.as_ptr(), 0, n, buf.as_mut_ptr() as *mut _) == 0 { return None }
+        // 언어·코드 페이지 목록 → 첫 번째 것, 없으면 흔한 값들
+        let mut langs: Vec<String> = Vec::new();
+        let (mut p, mut len) = (std::ptr::null_mut(), 0u32);
+        if VerQueryValueW(buf.as_ptr() as *const _, wide("\\VarFileInfo\\Translation").as_ptr(), &mut p, &mut len) != 0 && len >= 4 {
+            let t = std::slice::from_raw_parts(p as *const u16, (len / 2) as usize);
+            for c in t.chunks(2) { if c.len() == 2 { langs.push(format!("{:04x}{:04x}", c[0], c[1])) } }
+        }
+        langs.extend(["040904b0", "040904e4", "000004b0", "041204b0"].iter().map(|s| s.to_string()));
+        let get = |key: &str| -> String {
+            for l in &langs {
+                let (mut q, mut ql) = (std::ptr::null_mut(), 0u32);
+                let sub = wide(&format!("\\StringFileInfo\\{l}\\{key}"));
+                if VerQueryValueW(buf.as_ptr() as *const _, sub.as_ptr(), &mut q, &mut ql) != 0 && ql > 0 {
+                    let s = std::slice::from_raw_parts(q as *const u16, ql as usize);
+                    let end = s.iter().position(|&c| c == 0).unwrap_or(s.len());
+                    let v = String::from_utf16_lossy(&s[..end]).trim().to_string();
+                    if !v.is_empty() { return v }
+                }
+            }
+            String::new()
+        };
+        let i = ExeInfo { product: get("ProductName"), desc: get("FileDescription"), orig: get("OriginalFilename"), internal: get("InternalName") };
+        if i.product.is_empty() && i.desc.is_empty() && i.orig.is_empty() && i.internal.is_empty() { None } else { Some(i) }
+    }
+}
+#[cfg(not(windows))]
+fn exe_info(_path: &str) -> Option<ExeInfo> { None }
+#[tauri::command]
+fn exe_infos(paths: Vec<String>) -> Vec<Option<ExeInfo>> {
+    paths.iter().map(|p| exe_info(p)).collect()
+}
 #[tauri::command]
 fn exists(paths: Vec<String>) -> Vec<bool> {
     paths.iter().map(|p| Path::new(p).exists()).collect()
@@ -1021,7 +1067,7 @@ fn main() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Running::default())
         .invoke_handler(tauri::generate_handler![
-            store_load, store_save, store_load_text, store_save_text, pick_folders, pick_exe, pick_image, scan, exists, launch, stop, copy, reveal, info, read_text, write_ini, sfo_titles, param_infos, list_files, write_pgconfig, pick_file, bizhawk_firmware, list_dirs, extract_icons, thumb_index, thumb_fetch, thumb_cancel, arcade_db, fetch_image, open_url, meta_db, crc_files, crc_cancel, switch_keys, web_images, installed_emus, cemu_packs, cemu_set_pack, prune_images, np2_set_font, np2_ini_set, bizhawk_cores
+            store_load, store_save, store_load_text, store_save_text, pick_folders, pick_exe, pick_image, scan, exists, launch, stop, copy, reveal, info, read_text, write_ini, sfo_titles, param_infos, list_files, write_pgconfig, pick_file, bizhawk_firmware, list_dirs, extract_icons, thumb_index, thumb_fetch, thumb_cancel, arcade_db, fetch_image, open_url, meta_db, crc_files, crc_cancel, switch_keys, web_images, installed_emus, cemu_packs, cemu_set_pack, prune_images, np2_set_font, np2_ini_set, bizhawk_cores, exe_infos
         ])
         .setup(|app| {
             // 창은 여기서 만든다: WebView 데이터(캐시 등)도 실행 폴더 쪽에 두기 위해
@@ -1088,5 +1134,17 @@ mod bizhawk_tests {
         let v: Value = serde_json::from_str(&fs::read_to_string(d.join("config.ini")).unwrap()).unwrap();
         assert_eq!(v["PreferredCores"]["PCE"], "TurboNyma"); assert_eq!(v["PreferredCores"]["SGXCD"], "TurboNyma"); assert_eq!(v["PreferredCores"]["NES"], "QuickNes"); assert_eq!(v["Other"], 1);
         assert!(!bizhawk_cores(exe, pairs).unwrap()); // 같으면 안 고친다
+    }
+}
+#[cfg(all(test, windows))]
+mod exe_info_tests {
+    use super::*;
+    #[test]
+    fn notepad() {
+        let w = std::env::var("SystemRoot").unwrap_or_else(|_| r"C:\Windows".into());
+        let i = exe_info(&format!(r"{w}\System32\notepad.exe")).expect("버전 정보");
+        println!("{} / {} / {}", i.product, i.desc, i.orig);
+        assert!(i.orig.to_lowercase().starts_with("notepad"));
+        assert!(exe_info(&format!(r"{w}\없는파일.exe")).is_none());
     }
 }

@@ -2853,7 +2853,7 @@ dependencies = [
 
 [[package]]
 name = "retroshelf"
-version = "0.16.20"
+version = "0.16.21"
 dependencies = [
  "aes",
  "crc32fast",

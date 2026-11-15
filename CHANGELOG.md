@@ -2,6 +2,20 @@
 
 버전은 `src-tauri/tauri.conf.json`·`src-tauri/Cargo.toml`의 version. 배포판 `README.txt`의 "바뀐 점"과 같은 내용이다.
 
+## 0.16.21
+
+- 에뮬레이터 자동 지정 순서를 콘솔마다 에뮬레이션 정확도 순으로 바꿨습니다.
+  (예: N64 ares › simple64 › gopher64 › RMG › … › Project64, PS1 Mednafen › DuckStation › …)
+  이미 직접 고른 콘솔은 그대로입니다. 새 순서를 쓰려면 에뮬레이터 탭의 [모두 자동 지정으로 되돌리기]를 누르세요.
+- simple64X.exe 같은 simple64 변형판을 알아봅니다. gopher64, Mupen64Plus, NanoBoyAdvance, SkyEmu, BGB, Gambatte,
+  WideMelon, Panda3DS, PCSX-Redux, Play!, ClownMDEmu, Ymir, Hollycast, Geargrafx도 새로 알아봅니다.
+- 실행 파일의 버전 정보(제품 이름·설명)도 봅니다.
+  · 이름표에 없는 exe라도 설명에 "emulator"가 있으면 "자동 추정" 에뮬레이터로 넣고, 설명의 낱말로 콘솔을 추정합니다.
+    콘솔을 모르면 에뮬레이터 탭에서 고르면 되고, 빼면 다음 스캔에서 다시 넣지 않습니다.
+  · 같은 에뮬레이터가 여럿이면 제품 이름이 정확히 같은 본체를 고릅니다.
+- PS2 게임이 TeknoParrot 폴더의 PCSX2x6(System 246용)로 실행되던 문제 수정. TeknoParrot 안의 에뮬레이터는
+  다른 곳에 같은 에뮬레이터가 없을 때만 씁니다.
+
 ## 0.16.20
 
 - 필터 "커버 없는 것만"에 Switch·3DS처럼 롬 속 아이콘으로 그려지는 게임이 섞여 나오던 문제 수정.

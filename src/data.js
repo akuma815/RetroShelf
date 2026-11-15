@@ -5,71 +5,71 @@ const MAKERS = ['Nintendo','Sony','Sega','NEC','SNK','Bandai','Atari','MSX','Mic
 /* 실물 기기 기준으로 나눈다. h: 실제 케이스 높이(cm), aspect: 앞면 가로/세로, thick: 책등 두께(cm), kind: 케이스 재질, media: 내용물 */
 const CONSOLES = [
   /* Nintendo */
-  {id:'nes',   maker:'Nintendo', name:'NES / 패미컴',        short:'NES',  exts:['nes','unf','unif'], aliases:['nes','famicom','fc','nintendoentertainmentsystem'], h:17.8, aspect:.72, thick:2.6, kind:'box', media:'cart', cart:[.74,.6,'#8f9198'], band:'#b8322b', prefer:['mesen','retroarch:mesen','retroarch:nestopia','retroarch:fceumm','fceux','mednafen','bizhawk']},
-  {id:'fds',   maker:'Nintendo', name:'패미컴 디스크 시스템', short:'FDS',  exts:['fds'], aliases:['fds','famicomdisksystem','disksystem'], h:13, aspect:.75, thick:1.6, kind:'box', media:'cart', cart:[.5,.56,'#d8b32a'], band:'#c9a227', prefer:['mesen','retroarch:mesen','retroarch:nestopia','retroarch:fceumm','fceux','mednafen','bizhawk']},
-  {id:'snes',  maker:'Nintendo', name:'SNES / 슈퍼패미컴',    short:'SNES', exts:['sfc','smc'], aliases:['snes','superfamicom','sfc','supernintendo'], h:13.3, aspect:1.38, thick:3.2, kind:'box', media:'cart', cart:[.62,.66,'#a3a5ac'], band:'#5b4a9e', prefer:['bsnes','snes9x','retroarch:bsnes','retroarch:snes9x','mesen','bizhawk']},
+  {id:'nes',   maker:'Nintendo', name:'NES / 패미컴',        short:'NES',  exts:['nes','unf','unif'], aliases:['nes','famicom','fc','nintendoentertainmentsystem'], h:17.8, aspect:.72, thick:2.6, kind:'box', media:'cart', cart:[.74,.6,'#8f9198'], band:'#b8322b', prefer:['mesen','punes','nestopia','retroarch:mesen','retroarch:nestopia','ares','mednafen','retroarch:fceumm','fceux','retroarch:quicknes','bizhawk']},
+  {id:'fds',   maker:'Nintendo', name:'패미컴 디스크 시스템', short:'FDS',  exts:['fds'], aliases:['fds','famicomdisksystem','disksystem'], h:13, aspect:.75, thick:1.6, kind:'box', media:'cart', cart:[.5,.56,'#d8b32a'], band:'#c9a227', prefer:['mesen','punes','nestopia','retroarch:mesen','retroarch:nestopia','ares','mednafen','retroarch:fceumm','fceux','retroarch:quicknes','bizhawk']},
+  {id:'snes',  maker:'Nintendo', name:'SNES / 슈퍼패미컴',    short:'SNES', exts:['sfc','smc'], aliases:['snes','superfamicom','sfc','supernintendo'], h:13.3, aspect:1.38, thick:3.2, kind:'box', media:'cart', cart:[.62,.66,'#a3a5ac'], band:'#5b4a9e', prefer:['bsnes','ares','mesen','retroarch:bsnes','mesens','snes9x','retroarch:snes9x','mednafen','bizhawk']},
   {id:'vb',    maker:'Nintendo', name:'버추얼 보이',          short:'VB',   exts:['vb','vboy'], aliases:['virtualboy','vb'], h:18, aspect:.8, thick:3, kind:'box', media:'cart', cart:[.5,.5,'#2a2a2e'], band:'#b0101a', prefer:['mednafen','retroarch:mednafen_vb','bizhawk']},
-  {id:'n64',   maker:'Nintendo', name:'Nintendo 64',         short:'N64',  exts:['n64','z64','v64'], aliases:['n64','nintendo64'], h:13.3, aspect:1.38, thick:3.2, kind:'box', media:'cart', cart:[.56,.62,'#6c6f77'], band:'#1f7a3d', prefer:['project64','simple64','rmg','retroarch:mupen64plus_next','retroarch:parallel_n64','bizhawk']},
-  {id:'gb',    maker:'Nintendo', name:'게임보이',             short:'GB',   exts:['gb'], aliases:['gb','gameboy'], h:12, aspect:.9, thick:2.4, kind:'box', media:'cart', cart:[.5,.6,'#b9b8b0'], notch:true, band:'#6d7a2c', prefer:['sameboy','mgba','retroarch:sameboy','retroarch:gambatte','retroarch:mgba','mesen','bizhawk']},
-  {id:'gbc',   maker:'Nintendo', name:'게임보이 컬러',         short:'GBC',  exts:['gbc'], aliases:['gbc','gameboycolor'], h:12, aspect:.9, thick:2.4, kind:'box', media:'cart', cart:[.5,.6,'rgba(122,82,170,.92)'], notch:true, band:'#2f8a7a', prefer:['sameboy','mgba','retroarch:sameboy','retroarch:gambatte','retroarch:mgba','mesen','bizhawk']},
-  {id:'gba',   maker:'Nintendo', name:'게임보이 어드밴스',     short:'GBA',  exts:['gba'], aliases:['gba','gameboyadvance'], h:12.7, aspect:1.05, thick:2.4, kind:'box', media:'cart', cart:[.58,.36,'#45464f'], band:'#3f4fa8', prefer:['mgba','retroarch:mgba','mesen','mednafen','bizhawk']},
-  {id:'nds',   maker:'Nintendo', name:'닌텐도 DS',            short:'NDS',  exts:['nds'], aliases:['nds','nintendods','ds'], h:13.7, aspect:.91, thick:1.4, kind:'clam', media:'cart', cart:[.32,.3,'#2b2c34'], band:'#6a6f7a', prefer:['melonds','retroarch:melonds','retroarch:melondsds','desmume','retroarch:desmume','bizhawk']},
-  {id:'3ds',   maker:'Nintendo', name:'닌텐도 3DS',           short:'3DS',  exts:['3ds','cci','cxi','cia','3dsx','zcci','zcxi','z3dsx'], aliases:['3ds','nintendo3ds','n3ds'], h:13.7, aspect:.91, thick:1.4, kind:'clam', media:'cart', cart:[.32,.3,'#e6e6e6'], notch:true, band:'#c8202a', prefer:['azahar','lime3ds','citra','retroarch:citra']},
+  {id:'n64',   maker:'Nintendo', name:'Nintendo 64',         short:'N64',  exts:['n64','z64','v64'], aliases:['n64','nintendo64'], h:13.3, aspect:1.38, thick:3.2, kind:'box', media:'cart', cart:[.56,.62,'#6c6f77'], band:'#1f7a3d', prefer:['ares','simple64','gopher64','rmg','mupen64plus','retroarch:mupen64plus_next','retroarch:parallel_n64','project64','bizhawk']},
+  {id:'gb',    maker:'Nintendo', name:'게임보이',             short:'GB',   exts:['gb'], aliases:['gb','gameboy'], h:12, aspect:.9, thick:2.4, kind:'box', media:'cart', cart:[.5,.6,'#b9b8b0'], notch:true, band:'#6d7a2c', prefer:['sameboy','retroarch:sameboy','bgb','mesen','gambatte','retroarch:gambatte','mgba','retroarch:mgba','skyemu','ares','mesens','mednafen','vbam','bizhawk']},
+  {id:'gbc',   maker:'Nintendo', name:'게임보이 컬러',         short:'GBC',  exts:['gbc'], aliases:['gbc','gameboycolor'], h:12, aspect:.9, thick:2.4, kind:'box', media:'cart', cart:[.5,.6,'rgba(122,82,170,.92)'], notch:true, band:'#2f8a7a', prefer:['sameboy','retroarch:sameboy','bgb','mesen','gambatte','retroarch:gambatte','mgba','retroarch:mgba','skyemu','ares','mesens','mednafen','vbam','bizhawk']},
+  {id:'gba',   maker:'Nintendo', name:'게임보이 어드밴스',     short:'GBA',  exts:['gba'], aliases:['gba','gameboyadvance'], h:12.7, aspect:1.05, thick:2.4, kind:'box', media:'cart', cart:[.58,.36,'#45464f'], band:'#3f4fa8', prefer:['nanoboyadvance','mgba','retroarch:mgba','mesen','skyemu','ares','vbam','retroarch:vbam','nogba','mednafen','retroarch:gpsp','bizhawk']},
+  {id:'nds',   maker:'Nintendo', name:'닌텐도 DS',            short:'NDS',  exts:['nds'], aliases:['nds','nintendods','ds'], h:13.7, aspect:.91, thick:1.4, kind:'clam', media:'cart', cart:[.32,.3,'#2b2c34'], band:'#6a6f7a', prefer:['melonds','retroarch:melondsds','retroarch:melonds','widemelon','desmume','retroarch:desmume','skyemu','nogba','bizhawk']},
+  {id:'3ds',   maker:'Nintendo', name:'닌텐도 3DS',           short:'3DS',  exts:['3ds','cci','cxi','cia','3dsx','zcci','zcxi','z3dsx'], aliases:['3ds','nintendo3ds','n3ds'], h:13.7, aspect:.91, thick:1.4, kind:'clam', media:'cart', cart:[.32,.3,'#e6e6e6'], notch:true, band:'#c8202a', prefer:['azahar','lime3ds','citra','retroarch:azahar','retroarch:citra','panda3ds']},
   {id:'gc',    maker:'Nintendo', name:'게임큐브',              short:'GC',   exts:['gcm','gcz','rvz'], aliases:['gc','gamecube','ngc'], h:19, aspect:.7, thick:1.4, kind:'dvd', media:'mini', band:'#5a3f99', bandh:'13cqi', prefer:['dolphin','retroarch:dolphin']},
   {id:'wii',   maker:'Nintendo', name:'Wii',                  short:'WII',  exts:['wbfs','wad','rvz'], aliases:['wii'], h:19, aspect:.7, thick:1.4, kind:'dvd', media:'disc', band:'#8a919c', bandh:'13cqi', prefer:['dolphin','retroarch:dolphin']},
   {id:'wiiu',  maker:'Nintendo', name:'Wii U',                short:'WIIU', exts:['wud','wux','wua'], aliases:['wiiu','nintendowiiu'], h:19, aspect:.71, thick:1.4, kind:'dvd', media:'disc', band:'#1da1d6', bandh:'13cqi', prefer:['cemu']},
-  {id:'switch',maker:'Nintendo', name:'Nintendo Switch',      short:'NSW',  exts:['nsp','xci','nsz','xcz','nro'], aliases:['switch','nintendoswitch','nsw','nx'], h:17, aspect:.62, thick:1.1, kind:'clam', media:'cart', cart:[.34,.3,'#2b2c34'], notch:true, band:'#d3302c', bandh:'13cqi', prefer:['ryujinx','eden','citron','kenjinx','yuzu']},
+  {id:'switch',maker:'Nintendo', name:'Nintendo Switch',      short:'NSW',  exts:['nsp','xci','nsz','xcz','nro'], aliases:['switch','nintendoswitch','nsw','nx'], h:17, aspect:.62, thick:1.1, kind:'clam', media:'cart', cart:[.34,.3,'#2b2c34'], notch:true, band:'#d3302c', bandh:'13cqi', prefer:['ryujinx','kenjinx','eden','citron','yuzu','eglantine','lichii']},
   {id:'switch2',maker:'Nintendo',name:'Nintendo Switch 2',    short:'NS2',  exts:['nup','nsp','xci','nsz','xcz'], aliases:['switch2','nintendoswitch2','ns2','nx2','sw2'], h:17, aspect:.62, thick:1.1, kind:'clam', media:'cart', cart:[.34,.3,'#c9302c'], notch:true, band:'#7d1d2b', bandh:'13cqi', prefer:['eglantine','lichii']},
   /* Sony */
-  {id:'ps1',   maker:'Sony', name:'PlayStation',      short:'PS1',  exts:['pbp'], aliases:['ps1','psx','playstation','psone'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#2a2d36', prefer:['duckstation','retroarch:swanstation','retroarch:mednafen_psx_hw','retroarch:pcsx_rearmed','mednafen','bizhawk']},
-  {id:'ps2',   maker:'Sony', name:'PlayStation 2',    short:'PS2',  exts:[], aliases:['ps2','playstation2'], h:19, aspect:.7, thick:1.4, kind:'dvd', media:'disc', band:'#1d3f8f', bandh:'13cqi', prefer:['pcsx2','retroarch:pcsx2']},
+  {id:'ps1',   maker:'Sony', name:'PlayStation',      short:'PS1',  exts:['pbp'], aliases:['ps1','psx','playstation','psone'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#2a2d36', prefer:['mednafen','duckstation','retroarch:mednafen_psx_hw','retroarch:mednafen_psx','retroarch:swanstation','pcsxredux','retroarch:pcsx_rearmed','epsxe','ares','bizhawk']},
+  {id:'ps2',   maker:'Sony', name:'PlayStation 2',    short:'PS2',  exts:[], aliases:['ps2','playstation2'], h:19, aspect:.7, thick:1.4, kind:'dvd', media:'disc', band:'#1d3f8f', bandh:'13cqi', prefer:['pcsx2','retroarch:pcsx2','play','retroarch:play']},
   {id:'ps3',   maker:'Sony', name:'PlayStation 3',    short:'PS3',  exts:[], aliases:['ps3','playstation3'], h:17, aspect:.79, thick:1.4, kind:'dvd', media:'disc', band:'#222328', bandh:'12cqi', prefer:['rpcs3']},
   {id:'ps4',   maker:'Sony', name:'PlayStation 4',    short:'PS4',  exts:[], aliases:['ps4','playstation4'], h:17, aspect:.79, thick:1.4, kind:'dvd', media:'disc', band:'#1e4fa3', bandh:'12cqi', prefer:['shadps4','kyty']},
   {id:'ps5',   maker:'Sony', name:'PlayStation 5',    short:'PS5',  exts:[], aliases:['ps5','playstation5'], h:17, aspect:.79, thick:1.4, kind:'dvd', media:'disc', band:'#3a4a78', bandh:'12cqi', prefer:['kyty']},
   {id:'psp',   maker:'Sony', name:'PSP',              short:'PSP',  exts:['cso'], aliases:['psp','playstationportable'], h:17.6, aspect:.59, thick:1.4, kind:'dvd', media:'umd', band:'#3a3d46', bandh:'13cqi', prefer:['ppsspp','retroarch:ppsspp']},
   {id:'psvita',maker:'Sony', name:'PS Vita',          short:'VITA', exts:['vpk'], aliases:['psvita','vita','psv','playstationvita'], h:13.5, aspect:.78, thick:1.1, kind:'clam', media:'cart', cart:[.3,.3,'#1d1e24'], notch:true, band:'#1f3f8f', bandh:'13cqi', prefer:['vita3k']},
   /* Sega */
-  {id:'sg1000',maker:'Sega', name:'SG-1000',          short:'SG',   exts:['sg','sc'], aliases:['sg1000','sg3000','segasg1000'], h:13, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#3c3c44', prefer:['retroarch:genesis_plus_gx','retroarch:gearsystem','bizhawk']},
-  {id:'sms',   maker:'Sega', name:'마스터 시스템 / 마크 III', short:'SMS', exts:['sms'], aliases:['sms','mastersystem','segamastersystem','markiii','segamark3'], h:19, aspect:.72, thick:2.2, kind:'clam', media:'cart', cart:[.66,.48,'#1d1e22'], band:'#b02a2a', prefer:['mesen','retroarch:genesis_plus_gx','retroarch:gearsystem','retroarch:picodrive','mednafen','bizhawk']},
-  {id:'gg',    maker:'Sega', name:'게임 기어',          short:'GG',   exts:['gg'], aliases:['gg','gamegear','segagamegear'], h:12, aspect:.75, thick:1.8, kind:'clam', media:'cart', cart:[.5,.4,'#202125'], band:'#2d2d55', prefer:['mesen','retroarch:genesis_plus_gx','retroarch:gearsystem','mednafen','bizhawk']},
-  {id:'md',    maker:'Sega', name:'메가드라이브 / 제네시스', short:'MD', exts:['md','gen','smd'], aliases:['md','megadrive','genesis','segagenesis'], h:19, aspect:.72, thick:2.2, kind:'clam', media:'cart', cart:[.76,.5,'#25262c'], band:'#20232b', prefer:['blastem','retroarch:genesis_plus_gx','retroarch:picodrive','mednafen','bizhawk']},
-  {id:'segacd',maker:'Sega', name:'메가 CD / 세가 CD',  short:'MCD',  exts:[], aliases:['segacd','megacd','segamegacd','mcd'], h:14, aspect:1, thick:1.2, kind:'jewel', media:'disc', band:'#1f2a7a', prefer:['retroarch:genesis_plus_gx','retroarch:picodrive','bizhawk']},
-  {id:'32x',   maker:'Sega', name:'슈퍼 32X',          short:'32X',  exts:['32x'], aliases:['32x','sega32x','super32x'], h:19, aspect:.72, thick:2.2, kind:'clam', media:'cart', cart:[.76,.5,'#1d1e22'], band:'#a82222', prefer:['retroarch:picodrive','bizhawk']},
-  {id:'saturn',maker:'Sega', name:'세가 새턴',          short:'SAT',  exts:[], aliases:['saturn','segasaturn'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#2b4f7a', prefer:['mednafen','retroarch:mednafen_saturn','retroarch:yabasanshiro','bizhawk']},
-  {id:'dreamcast',maker:'Sega',name:'드림캐스트',        short:'DC',   exts:['cdi','gdi'], aliases:['dreamcast','dc','segadreamcast'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#d9541e', prefer:['flycast','redream','retroarch:flycast']},
-  {id:'naomi', maker:'Sega', name:'NAOMI',             short:'NAOMI',exts:[], aliases:['naomi','seganaomi'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#1f3f6e'], band:'#3b5aa8', prefer:['flycast','retroarch:flycast']},
-  {id:'naomi2',maker:'Sega', name:'NAOMI 2',           short:'NAOMI2',exts:[], aliases:['naomi2','seganaomi2'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#1a2f55'], band:'#2c3f7a', prefer:['flycast','retroarch:flycast']},
+  {id:'sg1000',maker:'Sega', name:'SG-1000',          short:'SG',   exts:['sg','sc'], aliases:['sg1000','sg3000','segasg1000'], h:13, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#3c3c44', prefer:['retroarch:genesis_plus_gx','mesen','ares','retroarch:gearsystem','bluemsx','fusion','bizhawk']},
+  {id:'sms',   maker:'Sega', name:'마스터 시스템 / 마크 III', short:'SMS', exts:['sms'], aliases:['sms','mastersystem','segamastersystem','markiii','segamark3'], h:19, aspect:.72, thick:2.2, kind:'clam', media:'cart', cart:[.66,.48,'#1d1e22'], band:'#b02a2a', prefer:['retroarch:genesis_plus_gx','mesen','ares','retroarch:gearsystem','mednafen','retroarch:smsplus','fusion','retroarch:picodrive','bizhawk']},
+  {id:'gg',    maker:'Sega', name:'게임 기어',          short:'GG',   exts:['gg'], aliases:['gg','gamegear','segagamegear'], h:12, aspect:.75, thick:1.8, kind:'clam', media:'cart', cart:[.5,.4,'#202125'], band:'#2d2d55', prefer:['retroarch:genesis_plus_gx','mesen','ares','retroarch:gearsystem','mednafen','retroarch:smsplus','fusion','bizhawk']},
+  {id:'md',    maker:'Sega', name:'메가드라이브 / 제네시스', short:'MD', exts:['md','gen','smd'], aliases:['md','megadrive','genesis','segagenesis'], h:19, aspect:.72, thick:2.2, kind:'clam', media:'cart', cart:[.76,.5,'#25262c'], band:'#20232b', prefer:['blastem','retroarch:genesis_plus_gx','ares','clownmdemu','retroarch:clownmdemu','retroarch:blastem','mednafen','fusion','retroarch:picodrive','bizhawk']},
+  {id:'segacd',maker:'Sega', name:'메가 CD / 세가 CD',  short:'MCD',  exts:[], aliases:['segacd','megacd','segamegacd','mcd'], h:14, aspect:1, thick:1.2, kind:'jewel', media:'disc', band:'#1f2a7a', prefer:['retroarch:genesis_plus_gx','ares','clownmdemu','retroarch:clownmdemu','fusion','retroarch:picodrive','bizhawk']},
+  {id:'32x',   maker:'Sega', name:'슈퍼 32X',          short:'32X',  exts:['32x'], aliases:['32x','sega32x','super32x'], h:19, aspect:.72, thick:2.2, kind:'clam', media:'cart', cart:[.76,.5,'#1d1e22'], band:'#a82222', prefer:['ares','retroarch:picodrive','fusion','bizhawk']},
+  {id:'saturn',maker:'Sega', name:'세가 새턴',          short:'SAT',  exts:[], aliases:['saturn','segasaturn'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#2b4f7a', prefer:['mednafen','retroarch:mednafen_saturn','ymir','retroarch:kronos','retroarch:yabasanshiro','retroarch:yabause','bizhawk']},
+  {id:'dreamcast',maker:'Sega',name:'드림캐스트',        short:'DC',   exts:['cdi','gdi'], aliases:['dreamcast','dc','segadreamcast'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#d9541e', prefer:['flycast','retroarch:flycast','hollycast','redream']},
+  {id:'naomi', maker:'Sega', name:'NAOMI',             short:'NAOMI',exts:[], aliases:['naomi','seganaomi'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#1f3f6e'], band:'#3b5aa8', prefer:['flycast','retroarch:flycast','hollycast']},
+  {id:'naomi2',maker:'Sega', name:'NAOMI 2',           short:'NAOMI2',exts:[], aliases:['naomi2','seganaomi2'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#1a2f55'], band:'#2c3f7a', prefer:['flycast','retroarch:flycast','hollycast']},
   {id:'model1',maker:'Sega',name:'Model 1',             short:'M1',   exts:[], aliases:['model1','segamodel1'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#3a3a46'], band:'#4a6a9c', prefer:['sm2emu','mame']},
   {id:'model2',maker:'Sega',name:'Model 2',             short:'M2',   exts:[], aliases:['model2','segamodel2','m2emulator','model2emulator'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#3a3a46'], band:'#3b5aa8', prefer:['sm2emu','m2emu','mame']},
   {id:'model3',maker:'Sega',name:'Model 3',             short:'M3',   exts:[], aliases:['model3','segamodel3','supermodel'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#3a3a46'], band:'#1d6fb8', prefer:['supermodel','mame']},
-  {id:'atomiswave',maker:'Sega',name:'아토미스웨이브',    short:'AW',   exts:[], aliases:['atomiswave','aw','sammyatomiswave'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#5e2a14'], band:'#c24a1a', prefer:['flycast','retroarch:flycast']},
+  {id:'atomiswave',maker:'Sega',name:'아토미스웨이브',    short:'AW',   exts:[], aliases:['atomiswave','aw','sammyatomiswave'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#5e2a14'], band:'#c24a1a', prefer:['flycast','retroarch:flycast','hollycast']},
   /* NEC */
-  {id:'pce',   maker:'NEC', name:'PC엔진 / 터보그래픽스-16', short:'PCE', exts:['pce'], aliases:['pce','pcengine','turbografx','turbografx16','tg16'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'cart', cart:[.62,.4,'#e9e6dc'], band:'#c46a1d', prefer:['mesen','mednafen','retroarch:mednafen_pce_fast','retroarch:mednafen_pce','bizhawk']},
-  {id:'sgx',   maker:'NEC', name:'PC엔진 슈퍼그래픽스', short:'SGX',  exts:['sgx'], aliases:['supergrafx','sgx','pcenginesupergrafx'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'cart', cart:[.62,.4,'#d8d4c8'], band:'#5a4a8a', prefer:['mesen','mednafen','retroarch:mednafen_supergrafx','bizhawk']},
-  {id:'pcecd', maker:'NEC', name:'PC엔진 CD-ROM² / 터보그래픽스-CD', short:'PCECD', exts:[], aliases:['pcecd','pcenginecd','pcenginecdrom','turbografxcd','tgcd','cdrom2','supercdrom'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#d07a2a', prefer:['mesen','mednafen','retroarch:mednafen_pce','retroarch:mednafen_pce_fast','bizhawk']},
+  {id:'pce',   maker:'NEC', name:'PC엔진 / 터보그래픽스-16', short:'PCE', exts:['pce'], aliases:['pce','pcengine','turbografx','turbografx16','tg16'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'cart', cart:[.62,.4,'#e9e6dc'], band:'#c46a1d', prefer:['mednafen','mesen','ares','retroarch:mednafen_pce','geargrafx','retroarch:geargrafx','retroarch:mednafen_pce_fast','bizhawk']},
+  {id:'sgx',   maker:'NEC', name:'PC엔진 슈퍼그래픽스', short:'SGX',  exts:['sgx'], aliases:['supergrafx','sgx','pcenginesupergrafx'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'cart', cart:[.62,.4,'#d8d4c8'], band:'#5a4a8a', prefer:['mednafen','mesen','ares','retroarch:mednafen_supergrafx','retroarch:mednafen_pce','geargrafx','bizhawk']},
+  {id:'pcecd', maker:'NEC', name:'PC엔진 CD-ROM² / 터보그래픽스-CD', short:'PCECD', exts:[], aliases:['pcecd','pcenginecd','pcenginecdrom','turbografxcd','tgcd','cdrom2','supercdrom'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#d07a2a', prefer:['mednafen','mesen','ares','retroarch:mednafen_pce','geargrafx','retroarch:geargrafx','retroarch:mednafen_pce_fast','bizhawk']},
   {id:'pcfx',  maker:'NEC', name:'PC-FX',              short:'PCFX', exts:[], aliases:['pcfx','necpcfx'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#7a2a5a', prefer:['mednafen','retroarch:mednafen_pcfx']},
   /* PC-98: 플로피(.fdi .d88 .hdm .nfd …)·하드디스크(.hdi .nhd .thd) 이미지. .d88은 PC-88 등과 같이 쓰니 폴더 이름이 우선 */
   {id:'pc98',  maker:'NEC', name:'PC-9801 / PC-9821',   short:'PC98', exts:['hdi','fdi','d98','98d','hdm','nfd','nhd','thd','fdd','tfd','d88','88d'], aliases:['pc98','pc9801','pc9821','pc98x1','necpc98','pc9800'], h:19, aspect:.72, thick:2.6, kind:'box', media:'cart', cart:[.62,.62,'#1d1d22'], band:'#2f6d9a', prefer:['np2','retroarch:np2kai']},
   /* SNK */
   {id:'neocd', maker:'SNK', name:'네오지오 CD',          short:'NGCD', exts:[], aliases:['neogeocd','neocd','snkneogeocd'], h:12.5, aspect:1.12, thick:1.0, kind:'jewel', media:'disc', band:'#8a1c1c', prefer:['retroarch:neocd']},
-  {id:'ngp',   maker:'SNK', name:'네오지오 포켓',        short:'NGP',  exts:['ngp'], aliases:['ngp','neogeopocket'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.42,.32,'#2b2b2b'], band:'#3a3a3a', prefer:['mednafen','retroarch:mednafen_ngp','retroarch:race','bizhawk']},
-  {id:'ngpc',  maker:'SNK', name:'네오지오 포켓 컬러',   short:'NGPC', exts:['ngc'], aliases:['ngpc','neogeopocketcolor'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.42,.32,'#3b3b46'], band:'#2a5aa8', prefer:['mednafen','retroarch:mednafen_ngp','retroarch:race','bizhawk']},
+  {id:'ngp',   maker:'SNK', name:'네오지오 포켓',        short:'NGP',  exts:['ngp'], aliases:['ngp','neogeopocket'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.42,.32,'#2b2b2b'], band:'#3a3a3a', prefer:['mednafen','ares','retroarch:mednafen_ngp','retroarch:race','bizhawk']},
+  {id:'ngpc',  maker:'SNK', name:'네오지오 포켓 컬러',   short:'NGPC', exts:['ngc'], aliases:['ngpc','neogeopocketcolor'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.42,.32,'#3b3b46'], band:'#2a5aa8', prefer:['mednafen','ares','retroarch:mednafen_ngp','retroarch:race','bizhawk']},
   /* Bandai */
-  {id:'ws',    maker:'Bandai', name:'원더스완',          short:'WS',   exts:['ws'], aliases:['ws','wonderswan'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.46,.34,'#3a3a40'], band:'#5a6a7a', prefer:['mesen','mednafen','retroarch:mednafen_wswan','bizhawk']},
-  {id:'wsc',   maker:'Bandai', name:'원더스완 컬러',      short:'WSC',  exts:['wsc'], aliases:['wsc','wonderswancolor','swancrystal'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.46,.34,'#2d3a5a'], band:'#2a7aa8', prefer:['mesen','mednafen','retroarch:mednafen_wswan','bizhawk']},
+  {id:'ws',    maker:'Bandai', name:'원더스완',          short:'WS',   exts:['ws'], aliases:['ws','wonderswan'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.46,.34,'#3a3a40'], band:'#5a6a7a', prefer:['mesen','ares','mednafen','retroarch:mednafen_wswan','bizhawk']},
+  {id:'wsc',   maker:'Bandai', name:'원더스완 컬러',      short:'WSC',  exts:['wsc'], aliases:['wsc','wonderswancolor','swancrystal'], h:11, aspect:.8, thick:1.8, kind:'box', media:'cart', cart:[.46,.34,'#2d3a5a'], band:'#2a7aa8', prefer:['mesen','ares','mednafen','retroarch:mednafen_wswan','bizhawk']},
   /* Atari */
-  {id:'a2600', maker:'Atari', name:'아타리 2600',        short:'2600', exts:['a26'], aliases:['atari2600','a2600','2600','vcs'], h:19, aspect:.72, thick:2.6, kind:'box', media:'cart', cart:[.6,.5,'#2a2420'], band:'#7a4a1a', prefer:['stella','retroarch:stella','retroarch:stella2014','bizhawk']},
+  {id:'a2600', maker:'Atari', name:'아타리 2600',        short:'2600', exts:['a26'], aliases:['atari2600','a2600','2600','vcs'], h:19, aspect:.72, thick:2.6, kind:'box', media:'cart', cart:[.6,.5,'#2a2420'], band:'#7a4a1a', prefer:['stella','retroarch:stella','ares','retroarch:stella2014','bizhawk']},
   {id:'a7800', maker:'Atari', name:'아타리 7800',        short:'7800', exts:['a78'], aliases:['atari7800','a7800','7800'], h:19, aspect:.72, thick:2.6, kind:'box', media:'cart', cart:[.6,.5,'#2a2a2e'], band:'#8a2a2a', prefer:['retroarch:prosystem','bizhawk']},
-  {id:'lynx',  maker:'Atari', name:'아타리 링크스',      short:'LYNX', exts:['lnx'], aliases:['lynx','atarilynx'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.5,.3,'#5a5a60'], band:'#444a55', prefer:['mednafen','retroarch:handy','retroarch:mednafen_lynx','bizhawk']},
+  {id:'lynx',  maker:'Atari', name:'아타리 링크스',      short:'LYNX', exts:['lnx'], aliases:['lynx','atarilynx'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.5,.3,'#5a5a60'], band:'#444a55', prefer:['retroarch:holani','mednafen','retroarch:mednafen_lynx','retroarch:handy','bizhawk']},
   /* MSX (규격별로 나눔) */
-  {id:'msx',   maker:'MSX', name:'MSX',               short:'MSX',  exts:['mx1'], aliases:['msx','msx1'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#2a5aa8', prefer:['openmsx','bluemsx','retroarch:bluemsx','retroarch:fmsx']},
-  {id:'msx2',  maker:'MSX', name:'MSX2 / MSX2+',      short:'MSX2', exts:['mx2'], aliases:['msx2','msx2plus'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#7a2a9a', prefer:['openmsx','bluemsx','retroarch:bluemsx','retroarch:fmsx']},
-  {id:'turbor',maker:'MSX', name:'MSX turbo R',       short:'TR',   exts:[], aliases:['turbor','msxturbor'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#b02a6a', prefer:['openmsx']},
+  {id:'msx',   maker:'MSX', name:'MSX',               short:'MSX',  exts:['mx1'], aliases:['msx','msx1'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#2a5aa8', prefer:['openmsx','bluemsx','retroarch:bluemsx','ares','fmsx','retroarch:fmsx']},
+  {id:'msx2',  maker:'MSX', name:'MSX2 / MSX2+',      short:'MSX2', exts:['mx2'], aliases:['msx2','msx2plus'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#7a2a9a', prefer:['openmsx','bluemsx','retroarch:bluemsx','ares','fmsx','retroarch:fmsx']},
+  {id:'turbor',maker:'MSX', name:'MSX turbo R',       short:'TR',   exts:[], aliases:['turbor','msxturbor'], h:17, aspect:.72, thick:2.2, kind:'box', media:'cart', cart:[.6,.42,'#2a2a2e'], band:'#b02a6a', prefer:['openmsx','bluemsx']},
   /* Microsoft */
   {id:'xbox',  maker:'Microsoft', name:'Xbox',         short:'XBOX', exts:['xbe'], aliases:['xbox','microsoftxbox','xb'], h:19, aspect:.71, thick:1.4, kind:'dvd', media:'disc', band:'#2d7d2d', bandh:'13cqi', prefer:['xemu','cxbx']},
   {id:'xbox360',maker:'Microsoft',name:'Xbox 360',     short:'X360', exts:['xex','zar'], aliases:['xbox360','x360'], h:19, aspect:.71, thick:1.4, kind:'dvd', media:'disc', band:'#5fa33a', bandh:'13cqi', prefer:['xenia']},
   /* 아케이드 */
-  {id:'arcade',maker:'아케이드', name:'아케이드 (MAME·FBNeo)', short:'ARC', exts:[], aliases:['arcade','mame','fbneo','fba','neogeo','cps1','cps2','cps3'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#1f5e3a'], band:'#8f2a5e', prefer:['mame','retroarch:fbneo','retroarch:mame','fbneo','bizhawk']},
+  {id:'arcade',maker:'아케이드', name:'아케이드 (MAME·FBNeo)', short:'ARC', exts:[], aliases:['arcade','mame','fbneo','fba','neogeo','cps1','cps2','cps3'], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#1f5e3a'], band:'#8f2a5e', prefer:['mame','retroarch:mame','fbneo','retroarch:fbneo','bizhawk']},
   /* PC 기반 아케이드: 게임은 TeknoParrot의 UserProfiles 프로필로 등록된다 */
   {id:'teknoparrot',maker:'아케이드', name:'PC 기반 아케이드 (TeknoParrot)', short:'TP', exts:[], aliases:[], h:19, aspect:.72, thick:2.6, kind:'box', media:'pcb', cart:[.8,.5,'#3a2a10'], band:'#b8860b', prefer:['teknoparrot']},
 ];
@@ -115,7 +115,9 @@ const EMUS = {
   snes9x:{name:'Snes9x', re:/^snes9x/i, consoles:['snes'], args:'"{rom}"'},
   bsnes:{name:'bsnes', re:/^bsnes/i, consoles:['snes'], args:'"{rom}"'},
   project64:{name:'Project64', re:/^project64$/i, consoles:['n64'], args:'"{rom}"'},
-  simple64:{name:'simple64', re:/^simple64(-gui)?$/i, consoles:['n64'], args:'"{rom}"'},
+  simple64:{name:'simple64', re:/^simple64(x)?(-gui)?$/i, consoles:['n64'], args:'"{rom}"'},
+  gopher64:{name:'gopher64', re:/^gopher64$/i, consoles:['n64'], args:'"{rom}"'},
+  mupen64plus:{name:'Mupen64Plus', re:/^mupen64plus(-ui-console)?$/i, consoles:['n64'], args:'"{rom}"'},
   rmg:{name:"Rosalie's Mupen GUI (RMG)", re:/^rmg$/i, consoles:['n64'], args:'"{rom}"'},
   blastem:{name:'BlastEm', re:/^blastem$/i, consoles:['md'], args:'"{rom}"'},
   mednafen:{name:'Mednafen', re:/^mednafen$/i, consoles:['pce','sgx','pcecd','pcfx','saturn','ps1','md','sms','gg','gb','gbc','gba','nes','fds','snes','vb','ngp','ngpc','ws','wsc','lynx'], args:'"{rom}"'},
@@ -160,6 +162,19 @@ const EMUS = {
   punes:{name:'puNES', re:/^punes(64)?$/i, consoles:['nes','fds'], args:'"{rom}"'},
   epsxe:{name:'ePSXe', re:/^epsxe$/i, consoles:['ps1'], args:'-nogui -loadbin "{rom}"'},
   fmsx:{name:'fMSX', re:/^fmsx$/i, consoles:['msx','msx2'], args:'"{rom}"'},
+  /* 정확도가 높은 단독 에뮬레이터들 (0.16.21). 실행 인수는 롬 경로 하나를 받는 보통 방식으로 두었다 */
+  bgb:{name:'BGB', re:/^bgb(64)?$/i, consoles:['gb','gbc'], args:'"{rom}"'},
+  gambatte:{name:'Gambatte', re:/^gambatte(_qt)?(_nonpsr)?$/i, consoles:['gb','gbc'], args:'"{rom}"'},
+  nanoboyadvance:{name:'NanoBoyAdvance', re:/^nanoboyadvance/i, consoles:['gba'], args:'"{rom}"'},
+  skyemu:{name:'SkyEmu', re:/^skyemu$/i, consoles:['gb','gbc','gba','nds'], args:'"{rom}"'},
+  widemelon:{name:'WideMelon', re:/^widemelon/i, consoles:['nds'], args:'"{rom}"'},
+  panda3ds:{name:'Panda3DS', re:/^(alber|panda3ds)$/i, consoles:['3ds'], args:'"{rom}"'},
+  pcsxredux:{name:'PCSX-Redux', re:/^pcsx-redux/i, consoles:['ps1'], args:'-run -iso "{rom}"'},
+  play:{name:'Play!', re:/^play$/i, dirRe:/play|purei/i, consoles:['ps2'], args:'--disc "{rom}"'},
+  clownmdemu:{name:'ClownMDEmu', re:/^clownmdemu/i, consoles:['md','segacd'], args:'"{rom}"'},
+  ymir:{name:'Ymir', re:/^ymir(-sdl3)?$/i, consoles:['saturn'], args:'"{rom}"'},
+  hollycast:{name:'Hollycast', re:/^hollycast$/i, consoles:['dreamcast','naomi','naomi2','atomiswave'], args:'"{rom}"'},
+  geargrafx:{name:'Geargrafx', re:/^geargrafx$/i, consoles:['pce','sgx','pcecd'], args:'"{rom}"'},
   /* BizHawk: 파일 경로를 마지막 인수로 받는다 (File > Open과 같음) */
   bizhawk:{name:'BizHawk', re:/^emuhawk$/i, consoles:['nes','fds','snes','gb','gbc','gba','n64','nds','vb','sg1000','sms','gg','md','segacd','32x','saturn','pce','sgx','pcecd','ps1','ngp','ngpc','ws','wsc','a2600','a7800','lynx','msx','3ds','arcade'], args:'"{rom}"'},
 };
@@ -196,6 +211,85 @@ const EXEC_EXT = ['exe','appimage',''];
 const HELPER_EXE=/(^|[-_ .])(updater|update|autoupdate|uninst(all)?|unins\d*|setup|install(er)?|crashpad|crash_?handler|crashreport(er)?|reporter|helper|service|vcredist)([-_ .\d]|$)/i;
 function exeScore(base){let s=0; const b=base.toLowerCase(); if(/multicpu/.test(b))s+=2;
   if(/arm64|aarch64/.test(b))s-=10; if(/headless|nogui|-cli|_cli|debug|sdl2?$/.test(b))s-=4; if(/64/.test(b))s+=2; if(/qt/.test(b))s+=1; if(/^(sdl)?np21/.test(b))s+=3;  /* Neko Project: II보다 21(/W) */ return s}
+/* 버전 정보의 파일 이름에서 확장자 떼기 (NOTEPAD.EXE.MUI → NOTEPAD) */
+const exeStem=s=>String(s).trim().replace(/\.mui$/i,'').replace(/\.(exe|dll|appimage)$/i,'');
+/* 같은 에뮬레이터 후보가 여럿일 때: 버전 정보의 제품 이름이 에뮬레이터 이름과 똑같으면 본체로 보고 앞으로,
+   이름 뒤에 뭔가 더 붙은 파생판(PCSX2 → PCSX2x6 SYSTEM246 등)은 뒤로 */
+function infoScore(inf,name){
+  if(!inf||!inf.product) return 0;
+  const p=norm(inf.product), n=norm(name);
+  if(!n) return 0;
+  if(p===n) return 3;
+  if(p.startsWith(n)&&/^[a-z0-9]/.test(p.slice(n.length))) return -2;
+  return 0;
+}
+/* 에뮬레이터가 아닌 도구 (프런트엔드·런처·관리자·변환기 등) */
+const EMU_TOOL=/front-?end|launcher|manager|download|convert|patch|tool|utilit|setup|install|config|server|room|debug|test|benchmark|bootstrap|editor|viewer|dumper|extract|decrypt|packer|\bgui for\b/i;
+/* 설명·제품 이름의 기종 낱말 → 콘솔. 위에서부터 보고, 더 구체적인 이름(슈퍼패미컴, 게임보이 어드밴스…)을 먼저 지운다 */
+const TEXT_CONSOLES=[
+  [/super\s*(nintendo|famicom)|\bsnes\b|\bsfc\b/,['snes']],
+  [/famicom\s*disk|\bfds\b/,['fds']],
+  [/nintendo\s*64|\bn64\b|mupen/,['n64']],
+  [/game\s*boy\s*advance|\bgba\b/,['gba']],
+  [/game\s*boy\s*colou?r|\bgbc\b/,['gbc']],
+  [/game\s*boy|\bgb\b/,['gb','gbc']],
+  [/\b3ds\b/,['3ds']],
+  [/nintendo\s*ds|\bnds\b/,['nds']],
+  [/\bnes\b|famicom|nintendo\s*entertainment/,['nes','fds']],
+  [/virtual\s*boy/,['vb']],
+  [/gamecube|game\s*cube/,['gc']],
+  [/\bwii\s*u\b/,['wiiu']],
+  [/\bwii\b/,['wii']],
+  [/switch\s*2/,['switch2']],
+  [/\bswitch\b/,['switch']],
+  [/playstation\s*portable|\bpsp\b/,['psp']],
+  [/playstation\s*vita|\bps\s*vita\b|\bvita\b/,['psvita']],
+  [/playstation\s*2|\bps2\b/,['ps2']],
+  [/playstation\s*3|\bps3\b/,['ps3']],
+  [/playstation\s*4|\bps4\b/,['ps4']],
+  [/playstation\s*5|\bps5\b/,['ps5']],
+  [/playstation|\bpsx\b|\bps1\b/,['ps1']],
+  [/sega\s*cd|mega\s*cd/,['segacd']],
+  [/\b32x\b/,['32x']],
+  [/mega\s*drive|genesis/,['md']],
+  [/master\s*system|\bsms\b/,['sms']],
+  [/game\s*gear/,['gg']],
+  [/sg-?1000/,['sg1000']],
+  [/saturn/,['saturn']],
+  [/dreamcast/,['dreamcast']],
+  [/naomi\s*2/,['naomi2']],
+  [/naomi/,['naomi']],
+  [/atomiswave/,['atomiswave']],
+  [/supergrafx/,['sgx']],
+  [/pc\s*engine|turbo\s*grafx|\bpce\b/,['pce','pcecd']],
+  [/pc-?fx/,['pcfx']],
+  [/pc-?98|pc-?98[02]1/,['pc98']],
+  [/wonder\s*swan/,['ws','wsc']],
+  [/neo\s*geo\s*pocket|\bngpc?\b/,['ngp','ngpc']],
+  [/neo\s*geo\s*cd/,['neocd']],
+  [/lynx/,['lynx']],
+  [/atari\s*2600|\bvcs\b/,['a2600']],
+  [/atari\s*7800/,['a7800']],
+  [/\bmsx\s*2|\bmsx2\b/,['msx2']],
+  [/\bmsx\b/,['msx','msx2']],
+  [/xbox\s*360/,['xbox360']],
+  [/xbox/,['xbox']],
+  [/arcade|\bmame\b/,['arcade']],
+];
+function consolesFromText(text){
+  let t=' '+text.toLowerCase()+' '; const out=[];
+  for(const [re,ids] of TEXT_CONSOLES){ const g=new RegExp(re.source,'g'); if(g.test(t)){ ids.forEach(i=>{if(!out.includes(i))out.push(i)}); t=t.replace(g,' ') } }
+  return out.filter(id=>CONSOLES.some(c=>c.id===id));
+}
+/* 이름표(EMUS)에 없는 실행 파일 가운데 버전 정보에 "emulator"가 들어 있는 것을 에뮬레이터로 추정한다.
+   기종은 설명·제품 이름·파일 이름·폴더 이름의 낱말로 고르고, 모르면 빈 목록(사용자가 에뮬레이터 탭에서 고름) */
+function guessEmu(p,inf){
+  if(!inf||HELPER_EXE.test(p.base)||EMU_TOOL.test(p.base)) return null;
+  const meta=[inf.product,inf.desc].filter(Boolean).join(' · ');
+  if(!/emulat/i.test(meta)||EMU_TOOL.test(meta)) return null;
+  const name=[inf.product,inf.desc,p.base].filter(Boolean).sort((a,b)=>a.length-b.length)[0];
+  return {name, desc:meta, consoles:consolesFromText(meta+' '+p.base+' '+(p.dirs[p.dirs.length-1]||''))};
+}
 function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function rng(seed){let a=seed;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const norm = s=>s.toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -392,23 +486,43 @@ function isBios(base,dirs){
 function scanFiles(files,opts={}){
   const allow=(opts.allow||[]).map(d=>d.replace(/\\/g,'/').replace(/\/+$/,'').toLowerCase());
   const emus=[]; const cores=[]; const emuDirs=[];
+  // 실행 파일 버전 정보 (경로 소문자 → {product,desc,orig,internal}). 없으면 이름만 본다
+  const exeInfo=opts.exeInfo||{};
+  const guesses=[]; const dirKeys=new Map();   // 폴더 → 그 폴더에서 이름표로 알아본 에뮬레이터들
+  // TeknoParrot 폴더 안에는 아케이드 기판용으로 고친 에뮬레이터들(PCSX2x6, RPCS3, Play!, Tekno* …)이 들어 있다.
+  // 같은 에뮬레이터가 다른 곳에 있으면 그쪽을 쓰고, 이름표에 없는 것은 추정하지 않는다
+  const tpDirs=files.map(f=>splitPath(f.path)).filter(p=>/^teknoparrotui$/i.test(p.base)&&EXEC_EXT.includes(p.ext)).map(p=>p.dir.toLowerCase());
+  const inTp=dir=>{const d=dir.toLowerCase(); return tpDirs.some(t=>d===t||d.startsWith(t+'/'))};
   for(const f of files){
     const p=splitPath(f.path);
     const cm=p.file.match(/^(.+)_libretro\.(dll|so|dylib)$/i);
     if(cm){cores.push({name:cm[1].toLowerCase(),path:f.path});continue}
     if(!EXEC_EXT.includes(p.ext)) continue;
+    const inf=exeInfo[f.path.toLowerCase()]||null;
+    // 파일 이름이 바뀐 판도 알아보도록 버전 정보의 원래 파일 이름·내부 이름·제품 이름도 맞춰 본다
+    const names=[p.base,...(inf?[inf.orig,inf.internal,inf.product].filter(Boolean).map(exeStem):[])];
+    let known=false;
     for(const [key,d] of Object.entries(EMUS)){
-      if(d.re.test(p.base)&&(!d.dirRe||d.dirRe.test(p.dir))&&!HELPER_EXE.test(p.base)&&!/launcher/i.test(p.base)){
+      if(names.some(n=>d.re.test(n))&&(!d.dirRe||d.dirRe.test(p.dir))&&!HELPER_EXE.test(p.base)&&!/launcher/i.test(p.base)){
+        known=true;
         const ex=emus.find(e=>e.key===key);
         // 버전별 폴더가 여럿이면 Pre-release·Nightly 쪽을 고른다 (shadPS4 versions\\Pre-release 등)
         // NP21/W의 haxm·whpx 폴더는 하드웨어 가속판(드라이버가 없으면 시작할 때 오류 창) → 맨 위 폴더의 보통판을 고른다
-        const sc=exeScore(p.base)+(/pre-?release|nightly|latest/i.test(p.dir)?1:0)-(/[\\/](haxm|whpx)$/i.test(p.dir)?5:0);
+        // 백업·예전 판 폴더(Backups, *_old, *-previous)는 뒤로, 같은 점수면 얕은 폴더 쪽
+        const sc=exeScore(p.base)+(/pre-?release|nightly|latest/i.test(p.dir)?1:0)-(/[\\/](haxm|whpx)$/i.test(p.dir)?5:0)
+          +infoScore(inf,d.name)-(/(^|[\\/])(backups?|old|previous)([\\/]|$)|[-_](old|previous|backup)\b/i.test(p.dir+'/'+p.base)?3:0)-p.dirs.length*0.01
+          -(key!=='teknoparrot'&&inTp(p.dir)?8:0);
         if(!ex){emus.push({key,name:d.name,path:f.path,cores:[],score:sc});emuDirs.push(p.dir.toLowerCase())}
         else if(sc>ex.score){ex.path=f.path;ex.score=sc;emuDirs.push(p.dir.toLowerCase())}
+        const dl=p.dir.toLowerCase(); if(!dirKeys.has(dl)) dirKeys.set(dl,new Set()); dirKeys.get(dl).add(key);
         break;
       }
     }
+    if(!known&&!inTp(p.dir)){ const g=guessEmu(p,inf); if(g) guesses.push({...g,path:f.path,dir:p.dir.toLowerCase(),text:norm(g.name+' '+p.base)}) }
   }
+  // 이름표에 없지만 버전 정보로 보아 에뮬레이터인 것. 이미 알아본 에뮬레이터 폴더 안의 같은 이름 변형판(디버그판·예전 판)은 뺀다
+  const guessEmus=guesses.filter(g=>![...(dirKeys.get(g.dir)||[])].some(k=>g.text.includes(norm(EMUS[k].name))))
+    .map(({text,dir,...g})=>g);
   const ra=emus.find(e=>e.key==='retroarch'); if(ra) ra.cores=cores.filter(c=>CORES[c.name]);
 
   // 커버 이미지 색인: "폴더|파일이름" → 경로
@@ -499,7 +613,7 @@ function scanFiles(files,opts={}){
     // m3u가 있으면 m3u 하나로 실행, 없으면 디스크 순서대로
     g.files.sort((a,b)=>(/\.m3u$/i.test(b.path)?1:0)-(/\.m3u$/i.test(a.path)?1:0)||(a.disc||0)-(b.disc||0));
     g.discs=Math.max(g.discs,g.files.length>1?g.files.length:0); return g});
-  return {emus,roms,skipped,unknown,extras,bios,dirCount:Object.keys(byDir).length};
+  return {emus,guessEmus,roms,skipped,unknown,extras,bios,dirCount:Object.keys(byDir).length};
 }
 
 /* 예시 데이터 (실제 파일은 없음) */

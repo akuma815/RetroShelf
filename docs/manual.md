@@ -1,6 +1,6 @@
 # RetroShelf 사용 설명서
 
-> 이 설명서는 **RetroShelf 0.16.20**를 기준으로 썼습니다. 화면 그림은 실제 라이브러리(게임 약 3만 개)에서 찍었고, 그림 속 폴더 경로는 예시 경로(`D:\Games\…`)로 바꿔 두었습니다.
+> 이 설명서는 **RetroShelf 0.16.21**를 기준으로 썼습니다. 화면 그림은 실제 라이브러리(게임 약 3만 개)에서 찍었고, 그림 속 폴더 경로는 예시 경로(`D:\Games\…`)로 바꿔 두었습니다.
 
 RetroShelf는 여러 에뮬레이터와 게임 롬을 한곳에 모아, 게임 가게 진열장처럼 케이스를 꽂아 두고 꺼내서 실행하는 Windows용 프로그램입니다. 폴더만 등록하면 에뮬레이터와 롬을 스스로 찾아 콘솔별 선반에 진열하고, 콘솔마다 알맞은 에뮬레이터를 자동으로 붙여 줍니다.
 
@@ -427,7 +427,7 @@ Switch 게임 정보 창의 **타이틀 아이콘** 줄에는 아이콘을 못 �
 
 콘솔마다 쓸 에뮬레이터를 고릅니다.
 
-- **자동**: 찾은 에뮬레이터 중 우선순위가 가장 높은 것을 RetroShelf가 붙인 상태. 새 에뮬레이터를 찾으면 다시 정해집니다.
+- **자동**: 찾은 에뮬레이터 중 우선순위([9.6](#96-자동-지정-우선순위), 정확도 순)가 가장 높은 것을 RetroShelf가 붙인 상태. 새 에뮬레이터를 찾으면 다시 정해집니다.
 - **직접 지정**: 사용자가 고른 상태. 다시 스캔해도 바뀌지 않습니다.
 - 선택 상자의 **다른 실행 파일 직접 고르기…** 로 목록에 없는 exe를 그 콘솔의 에뮬레이터로 쓸 수 있습니다.
 - **모두 자동 지정으로 되돌리기**: 모든 콘솔을 자동 상태로 돌립니다.
@@ -479,6 +479,67 @@ RetroArch는 `cores` 폴더의 `*_libretro.dll`을 보고 돌릴 수 있는 콘�
 
 - RetroShelf가 아는 에뮬레이터면 그 실행 방식을 그대로 씁니다.
 - 모르는 프로그램이면 카드가 새로 생기고, 카드에서 **실행할 콘솔**을 눌러 켜고 이름·실행 인수를 정합니다.
+
+### 9.5 에뮬레이터를 알아보는 방법
+
+스캔할 때 폴더 안의 실행 파일을 아래 순서로 살펴봅니다. 새 에뮬레이터를 받아 스캔 폴더에 넣기만 하면 대부분 알아서 잡힙니다.
+
+1. **이름표**: RetroShelf가 아는 에뮬레이터(약 70가지)의 실행 파일 이름과 맞춰 봅니다. `simple64X.exe`처럼 이름 뒤에 글자가 붙은 변형판도 알아봅니다.
+2. **버전 정보**: exe의 속성 → 자세히에 나오는 제품 이름·파일 설명·원래 파일 이름도 이름표와 맞춰 봅니다. 그래서 exe 이름을 바꿔 둬도 알아봅니다.
+3. **같은 에뮬레이터가 여럿일 때**: 64비트판, 제품 이름이 에뮬레이터 이름과 정확히 같은 본체, Pre-release·Nightly 폴더, 얕은 폴더를 앞에 둡니다. 백업·예전 판 폴더(`Backups`, `_old`, `-previous`), 디버그판, 이름 뒤에 다른 것이 붙은 파생판은 뒤로 미룹니다.
+4. **TeknoParrot 폴더 안의 에뮬레이터**: TeknoParrot에는 아케이드 기판용으로 고친 에뮬레이터(PCSX2x6, RPCS3, Play! 등)가 함께 들어 있습니다. 같은 에뮬레이터가 다른 곳에 있으면 그쪽을 쓰고, TeknoParrot 쪽은 다른 것이 없을 때만 씁니다.
+5. **자동 추정**: 이름표에 없는 실행 파일이라도 버전 정보에 "emulator"라는 말이 있으면 에뮬레이터로 보고 카드를 만듭니다. 런처·관리자·변환기·프런트엔드 같은 도구는 뺍니다.
+   - 어떤 콘솔용인지는 설명의 낱말로 추정합니다. 예를 들어 "Nintendo DS emulator"는 DS, "Sega Dreamcast, Naomi and Atomiswave emulator"는 드림캐스트·NAOMI·아토미스웨이브입니다.
+   - 낱말이 없어 콘솔을 모르면 카드의 **실행할 콘솔**에서 직접 골라 주세요.
+   - 자동 추정한 에뮬레이터는 카드에 **자동 추정** 표시가 붙고, 선택 상자에는 "(자동 추정)"으로 나옵니다. 이름표에 있는 에뮬레이터가 하나도 없는 콘솔에만 자동으로 지정됩니다.
+   - 이름·콘솔·파일을 고치면 직접 지정 에뮬레이터로 바뀝니다. **빼기**를 누르면 다음 스캔에서 다시 넣지 않습니다.
+
+> 자동 추정은 에뮬레이터 이름표에 아직 없는 프로그램을 빨리 쓰게 해 주는 장치입니다. 실행 인수는 롬 경로 하나(`"{rom}"`)로 시작하니, 실행이 안 되면 그 에뮬레이터의 사용법에 맞게 실행 인수를 고쳐 주세요.
+
+### 9.6 자동 지정 우선순위
+
+콘솔마다 **에뮬레이션 정확도가 높은 순서**로 우선순위를 정해 두었습니다. 자동 지정은 이 순서에서 찾은 에뮬레이터 가운데 가장 앞의 것을 고릅니다. `RA·`는 RetroArch 코어입니다. BizHawk는 여러 기종을 한 프로그램에 모은 것이라 항상 맨 뒤에 둡니다.
+
+| 콘솔 | 우선순위 (왼쪽이 먼저) |
+|---|---|
+| NES / 패미컴, 디스크 시스템 | Mesen › puNES › Nestopia › RA·mesen › RA·nestopia › ares › Mednafen › RA·fceumm › FCEUX |
+| SNES / 슈퍼패미컴 | bsnes › ares › Mesen › RA·bsnes › Mesen-S › Snes9x › RA·snes9x › Mednafen |
+| 버추얼 보이 | Mednafen › RA·mednafen_vb |
+| Nintendo 64 | ares › simple64 › gopher64 › RMG › Mupen64Plus › RA·mupen64plus_next › RA·parallel_n64 › Project64 |
+| 게임보이 · 컬러 | SameBoy › RA·sameboy › BGB › Mesen › Gambatte › RA·gambatte › mGBA › RA·mgba › SkyEmu › ares › Mesen-S › Mednafen › VisualBoyAdvance-M |
+| 게임보이 어드밴스 | NanoBoyAdvance › mGBA › RA·mgba › Mesen › SkyEmu › ares › VisualBoyAdvance-M › RA·vbam › NO$GBA › Mednafen › RA·gpsp |
+| 닌텐도 DS | melonDS › RA·melondsds › RA·melonds › WideMelon › DeSmuME › RA·desmume › SkyEmu › NO$GBA |
+| 닌텐도 3DS | Azahar › Lime3DS › Citra › RA·azahar › RA·citra › Panda3DS |
+| 게임큐브 · Wii | Dolphin › RA·dolphin |
+| Wii U | Cemu |
+| Switch | Ryujinx › KenjiNX › Eden › Citron › yuzu 계열 › Eglantine › Lichii |
+| Switch 2 | Eglantine › Lichii |
+| PlayStation | Mednafen › DuckStation › RA·mednafen_psx_hw › RA·mednafen_psx › RA·swanstation › PCSX-Redux › RA·pcsx_rearmed › ePSXe › ares |
+| PlayStation 2 | PCSX2 › RA·pcsx2 › Play! |
+| PlayStation 3 · 4 · 5, PSP, Vita | RPCS3 / shadPS4 › Kyty / Kyty / PPSSPP / Vita3K |
+| SG-1000 | RA·genesis_plus_gx › Mesen › ares › RA·gearsystem › blueMSX › Kega Fusion |
+| 마스터 시스템 · 게임 기어 | RA·genesis_plus_gx › Mesen › ares › RA·gearsystem › Mednafen › RA·smsplus › Kega Fusion |
+| 메가드라이브 | BlastEm › RA·genesis_plus_gx › ares › ClownMDEmu › RA·clownmdemu › Mednafen › Kega Fusion › RA·picodrive |
+| 메가 CD | RA·genesis_plus_gx › ares › ClownMDEmu › Kega Fusion › RA·picodrive |
+| 32X | ares › RA·picodrive › Kega Fusion |
+| 새턴 | Mednafen › RA·mednafen_saturn › Ymir › RA·kronos › RA·yabasanshiro › RA·yabause |
+| 드림캐스트 | Flycast › RA·flycast › Hollycast › Redream |
+| NAOMI · NAOMI 2 · 아토미스웨이브 | Flycast › RA·flycast › Hollycast |
+| Model 1 · 2 · 3 | sm2-emu › Model 2 Emulator › MAME / Supermodel › MAME |
+| PC엔진 · CD-ROM² | Mednafen › Mesen › ares › RA·mednafen_pce › Geargrafx › RA·mednafen_pce_fast |
+| 슈퍼그래픽스 | Mednafen › Mesen › ares › RA·mednafen_supergrafx › RA·mednafen_pce › Geargrafx |
+| PC-FX | Mednafen › RA·mednafen_pcfx |
+| PC-98 | Neko Project › RA·np2kai |
+| 네오지오 포켓 · 컬러 | Mednafen › ares › RA·mednafen_ngp › RA·race |
+| 원더스완 · 컬러 | Mesen › ares › Mednafen › RA·mednafen_wswan |
+| 아타리 2600 · 7800 · 링크스 | Stella › RA·stella › ares / RA·prosystem / RA·holani › Mednafen › RA·handy |
+| MSX · MSX2 · turbo R | openMSX › blueMSX › RA·bluemsx › ares › fMSX |
+| Xbox · Xbox 360 | xemu › Cxbx-Reloaded / Xenia |
+| 아케이드 | MAME › RA·mame › FBNeo › RA·fbneo |
+
+- 위 표에 없는 에뮬레이터도 그 콘솔을 지원하면 표의 뒤쪽에 자동으로 붙습니다.
+- 자동 지정은 **자동** 상태인 콘솔에만 적용됩니다. 직접 고른 콘솔은 그대로이니, 새 순서를 적용하려면 [9.1](#91-콘솔별-실행-에뮬레이터)의 **모두 자동 지정으로 되돌리기**를 누르세요.
+- Mednafen은 CHD 파일을 읽지 못하므로, CHD 게임은 Mednafen이 1순위여도 그다음 에뮬레이터로 실행합니다.
 
 ---
 
@@ -693,7 +754,7 @@ RetroShelf의 모든 데이터는 `RetroShelf.exe` 옆의 **`RetroShelfData`** �
 여러 콘솔이 쓰는 확장자(`.iso`, `.chd`, `.zip` …)인데 폴더 이름으로 콘솔을 알 수 없을 때입니다. 폴더 이름을 `PS2`, `Saturn`처럼 바꾸거나, [콘솔별 ROM 폴더](#103-콘솔별-rom-폴더)를 지정한 뒤 다시 스캔하세요. 정보 창의 **콘솔** 상자에서 게임 하나만 바꿀 수도 있습니다.
 
 **에뮬레이터를 못 찾아요.**
-에뮬레이터 폴더가 스캔 폴더 안에 있는지 확인하세요. exe 이름이 바뀐 판이면 콘솔 줄의 **다른 실행 파일 직접 고르기…** 나 **실행 파일 직접 추가**로 고르면 됩니다.
+에뮬레이터 폴더가 스캔 폴더 안에 있는지 확인하세요. 이름표에 없는 에뮬레이터도 버전 정보에 "emulator"가 있으면 **자동 추정**으로 잡힙니다([9.5](#95-에뮬레이터를-알아보는-방법)). 그래도 안 잡히면 콘솔 줄의 **다른 실행 파일 직접 고르기…** 나 **실행 파일 직접 추가**로 고르면 됩니다.
 
 **실행하자마자 꺼져요.**
 실패 알림 창의 로그와 안내를 먼저 보세요. 흔한 원인은 BIOS·키 파일 없음, 실행 인수 불일치, 아케이드 롬셋 버전 불일치입니다. **명령 복사**로 명령을 복사해 명령 프롬프트에서 직접 실행해 보면 원인을 찾기 쉽습니다.
@@ -734,10 +795,10 @@ RetroShelf는 에뮬레이터 설정(전체 화면, 해상도, 컨트롤러 등)
 
 ### 자동으로 알아보는 에뮬레이터
 
-RetroArch, ares, BizHawk, Mednafen, MAME, FBNeo, DuckStation, PCSX2, RPCS3, shadPS4, Kyty, Vita3K, PPSSPP, ePSXe, Dolphin, Cemu, Azahar, Lime3DS, Citra, Ryujinx, KenjiNX, Eden, Citron, yuzu 계열, Eglantine, Lichii, melonDS, DeSmuME, NO$GBA, mGBA, VisualBoyAdvance-M, SameBoy, Mesen, Mesen-S, FCEUX, Nestopia, puNES, Snes9x, bsnes, Project64, simple64, RMG, BlastEm, Kega Fusion, Flycast, Redream, Supermodel, sm2-emu, Model 2 Emulator, openMSX, blueMSX, fMSX, Stella, Neko Project 계열, xemu, Cxbx-Reloaded, Xenia, TeknoParrot
+RetroArch, ares, BizHawk, Mednafen, MAME, FBNeo, DuckStation, PCSX-Redux, ePSXe, PCSX2, Play!, RPCS3, shadPS4, Kyty, Vita3K, PPSSPP, Dolphin, Cemu, Azahar, Lime3DS, Citra, Panda3DS, Ryujinx, KenjiNX, Eden, Citron, yuzu 계열, Eglantine, Lichii, melonDS, WideMelon, DeSmuME, NO$GBA, NanoBoyAdvance, mGBA, SkyEmu, VisualBoyAdvance-M, SameBoy, BGB, Gambatte, Mesen, Mesen-S, FCEUX, Nestopia, puNES, Snes9x, bsnes, Project64, simple64(simple64X 포함), gopher64, Mupen64Plus, RMG, BlastEm, ClownMDEmu, Kega Fusion, Ymir, Flycast, Hollycast, Redream, Supermodel, sm2-emu, Model 2 Emulator, Geargrafx, openMSX, blueMSX, fMSX, Stella, Neko Project 계열, xemu, Cxbx-Reloaded, Xenia, TeknoParrot
 
 - 스캔 폴더 밖이라도 `C:\Program Files` 같은 기본 설치 위치의 openMSX, blueMSX, Project64, Dolphin, PCSX2, PPSSPP, mGBA 등은 찾아 줍니다.
-- 목록에 없는 에뮬레이터도 [실행 파일 직접 추가](#94-목록에-없는-에뮬레이터-쓰기)로 쓸 수 있습니다.
+- 이름표에 없는 에뮬레이터도 버전 정보로 [자동 추정](#95-에뮬레이터를-알아보는-방법)하고, [실행 파일 직접 추가](#94-목록에-없는-에뮬레이터-쓰기)로도 쓸 수 있습니다.
 
 ---
 

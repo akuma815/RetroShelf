@@ -21,7 +21,7 @@ const collator = new Intl.Collator('ko',{numeric:true,sensitivity:'base'});
 
 /* ===================== 상태 ===================== */
 let S; let openId=null; let scanning=null; const runningIds=new Set();
-function blank(){return {tab:'lib',filter:'all',q:'',sort:'name',view:'front',ch:200,roots:[],emus:[],manualEmus:[],customEmus:[],roms:[],map:{},emuArgs:{},emuPath:{},emuRomDirs:{},syscards:[],excludeDirs:[],consoleDirs:{},sortDir:1,flt:{},fltOpen:false,
+function blank(){return {tab:'lib',filter:'all',q:'',sort:'name',view:'front',ch:200,roots:[],emus:[],manualEmus:[],customEmus:[],ignoreExe:[],roms:[],map:{},emuArgs:{},emuPath:{},emuRomDirs:{},syscards:[],excludeDirs:[],consoleDirs:{},sortDir:1,flt:{},fltOpen:false,
   settings:{minimize:true,rescanOnStart:true,boxart:true,anim:'fast',priceTags:true,shelf:'default',identify:true,oneG:true,regionPref:['KR','JP','US','EU','WW'],randUnplayed:false},cols:[],groupPick:{},log:[],lastScan:null,isSample:false}}
 let saveT;
 function save(){VERS=null;clearTimeout(saveT);saveT=setTimeout(()=>{api.save({...S,log:S.log.slice(-80)}).catch(()=>toast('라이브러리를 저장하지 못했어요'))},800)}
@@ -40,7 +40,7 @@ function options(cid){
   const out=[];
   for(const e of allEmus()){
     if(e.key==='retroarch'&&!e.custom){ for(const c of e.cores) if((CORES[c.name]||[]).includes(cid)) out.push({id:'retroarch:'+c.name,label:'RetroArch · '+c.name}); }
-    else if(emuConsoles(e).includes(cid)) out.push({id:e.key,label:e.custom?`${e.name} (직접 지정)`:e.name});
+    else if(emuConsoles(e).includes(cid)) out.push({id:e.key,label:e.custom?`${e.name} (${e.guess?'자동 추정':'직접 지정'})`:e.name});
   }
   return out;
 }
@@ -80,6 +80,25 @@ function scanPlan(){
   for(const x of all){const n=normDir(x.path); const o=m.get(n); if(!o) m.set(n,{...x}); else if(x.recursive) o.recursive=true}
   const keys=[...m.keys()];
   return keys.filter(k=>!keys.some(o=>o!==k&&m.get(o).recursive&&k.startsWith(o+'\\'))).map(k=>m.get(k));
+}
+/* 스캔에서 추정한 에뮬레이터(이름표에 없지만 버전 정보에 "emulator"가 있는 exe)를 직접 지정 목록에 넣는다.
+   guess 표시가 있는 것은 사용자가 아직 손대지 않은 것: 다음 스캔에서 다시 맞추고, 파일이 사라지면 뺀다.
+   이름·콘솔·파일을 고치면 guess 표시를 지워 보통 직접 지정 에뮬레이터가 된다. 빼기를 누른 것은 ignoreExe에 기억한다.
+   돌려주는 값: 이번에 새로 넣은 것 */
+function mergeGuessEmus(list,underMissing){
+  const ign=new Set((S.ignoreExe||[]).map(x=>x.toLowerCase()));
+  const byPath=new Map(list.map(g=>[g.path.toLowerCase(),g]));
+  S.customEmus=S.customEmus.filter(e=>!e.guess||byPath.has(e.path.toLowerCase())||underMissing(e.path));
+  const overridden=new Set(Object.values(S.emuPath||{}).map(p=>p.toLowerCase()));
+  const added=[];
+  for(const [low,g] of byPath){
+    const cur=S.customEmus.find(e=>e.path.toLowerCase()===low);
+    if(cur){ if(cur.guess){ cur.name=g.name; cur.desc=g.desc; cur.consoles=g.consoles } continue }
+    if(ign.has(low)||overridden.has(low)) continue;
+    const e={key:'g'+hashStr(low).toString(36),name:g.name,path:g.path,consoles:g.consoles,custom:true,guess:true,desc:g.desc,kind:null,cores:[]};
+    S.customEmus.push(e); added.push(e);
+  }
+  return added;
 }
 function scanRoots(){ return scanPlan().map(x=>x.path) }
 /* 콘솔 ROM 폴더 적용: 그 폴더의 게임은 그 콘솔로, 폴더를 지정한 콘솔은 그 폴더의 게임만 남긴다 */
@@ -719,8 +738,9 @@ function renderEmu(){
       ? `<div class="lbl">실행할 콘솔 (눌러서 켜고 끄기)</div><div>${CONSOLES.map(c=>`<button class="chip tog${cons.includes(c.id)?' on':''}" data-act="ctog" data-key="${e.key}" data-c="${c.id}" aria-pressed="${cons.includes(c.id)}">${esc(c.short)}</button>`).join('')}</div>`
       : `<div>${cons.map(id=>`<span class="chip">${esc(CONS[id].short)}</span>`).join('')}</div>`;
     return `<div class="emu${custom?' custom':''}">
-      ${custom?`<input class="ename" data-cname="${e.key}" value="${esc(e.name)}" aria-label="에뮬레이터 이름" spellcheck="false"> <span class="pill mut">직접 지정</span>`:`<b>${esc(e.name)}</b> ${e.manual?'<span class="pill mut">직접 추가</span>':e.overridden?'<span class="pill ok">실행 파일 직접 지정</span>':'<span class="pill mut">자동</span>'}`}
+      ${custom?`<input class="ename" data-cname="${e.key}" value="${esc(e.name)}" aria-label="에뮬레이터 이름" spellcheck="false"> ${e.guess?'<span class="pill">자동 추정</span>':'<span class="pill mut">직접 지정</span>'}`:`<b>${esc(e.name)}</b> ${e.manual?'<span class="pill mut">직접 추가</span>':e.overridden?'<span class="pill ok">실행 파일 직접 지정</span>':'<span class="pill mut">자동</span>'}`}
       <div class="p mono">${esc(e.path)}</div>
+      ${e.guess?`<p class="note">이름표에 없는 프로그램이지만 버전 정보(<i>${esc(e.desc||'')}</i>)로 보아 에뮬레이터라서 넣었어요. ${e.consoles.length?'콘솔은 설명의 낱말로 추정했어요.':'어떤 콘솔용인지 몰라서 아래에서 골라 주세요.'} 이름표에 있는 에뮬레이터가 없는 콘솔에만 자동으로 쓰여요. 고치면 직접 지정으로 바뀌고, 빼면 다음 스캔에서 다시 넣지 않아요.</p>`:''}
       ${e.overridden?`<p class="note">자동으로 찾은 파일: <span class="mono">${esc(e.autoPath)}</span></p>`:''}
       ${consHTML}
       ${e.key==='retroarch'&&!custom?`<p class="note" style="margin-top:6px">코어 ${e.cores.length}개: ${e.cores.map(c=>esc(c.name)).join(', ')||'없음'}</p>`:''}
@@ -837,7 +857,11 @@ async function rescan({quiet}={}){
   try{res=await api.scan(roots,S.excludeDirs||[],scanPlan().filter(x=>!x.recursive).map(x=>x.path))}catch(err){scanning=null;log('스캔에 실패했어요: '+err,'w');render();return}
   // 스캔 폴더 밖 기본 설치 위치(Program Files 등)의 에뮬레이터도 찾는다. 스캔 폴더 쪽이 먼저라 그쪽이 우선
   try{ const inst=(await api.installedEmus?.())||[]; if(inst.length) res.files=res.files.concat(inst.map(path=>({path,size:0}))) }catch(e){}
-  const r=scanFiles(res.files,{allow:emuDirList().map(x=>x.d)});
+  // 실행 파일의 버전 정보: 이름이 바뀐 에뮬레이터, 이름표에 없는 에뮬레이터를 알아보는 데 쓴다
+  const exeInfo={};
+  try{ const exes=res.files.map(f=>f.path).filter(p=>/\.exe$/i.test(p));
+    if(exes.length&&api.exeInfos){ const inf=await api.exeInfos(exes); exes.forEach((p,i)=>{ if(inf[i]) exeInfo[p.toLowerCase()]=inf[i] }) } }catch(e){ console.warn(e) }
+  const r=scanFiles(res.files,{allow:emuDirList().map(x=>x.d),exeInfo});
   const vita=[...r.emus,...S.manualEmus,...S.customEmus].find(e=>e.key==='vita3k'||e.kind==='vita3k');
   if(vita){ try{ r.roms.push(...await vitaInstalled(vita.path)) }catch(e){} }
   for(const tp of [...r.emus,...S.manualEmus,...S.customEmus].filter(e=>e.key==='teknoparrot'||e.kind==='teknoparrot')){ try{ r.roms.push(...await tpProfiles(tp.path)) }catch(e){} }
@@ -863,6 +887,7 @@ async function rescan({quiet}={}){
   const underMissing=p=>missing.some(m=>p.toLowerCase().startsWith(m));
   const keptEmus=S.emus.filter(e=>underMissing(e.path)&&!r.emus.some(x=>x.key===e.key));
   S.emus=[...r.emus,...keptEmus];
+  const guessed=mergeGuessEmus(r.guessEmus||[],underMissing);
   const viaDir=applyEmuDirs(r.roms);
   const cd=applyConsoleDirs(r.roms); r.roms=cd.roms;
   const old=new Map(S.roms.map(x=>[x.id,x]));
@@ -880,6 +905,7 @@ async function rescan({quiet}={}){
   const sec=((Date.now()-t0)/1000).toFixed(1);
   log(`  폴더 ${fmtNum(res.dirs)}개, 관련 파일 ${fmtNum(res.files.length)}개 확인 (${sec}초)${res.truncated?' · 파일이 너무 많아 일부만 확인':''}`);
   r.emus.forEach(e=>log(`  에뮬레이터: ${e.name}${e.cores.length?` (코어 ${e.cores.length}개)`:''}`,'ok'));
+  guessed.forEach(e=>log(`  에뮬레이터 (자동 추정): ${e.name} → ${e.consoles.length?e.consoles.map(c=>CONS[c]?.short||c).join(', '):'콘솔 모름 · 에뮬레이터 탭에서 골라 주세요'}`,'ok'));
   log(`  ROM ${fmtNum(S.roms.length)}개 · 새로 ${fmtNum(added)}개${removed?` · 사라진 파일 ${fmtNum(removed)}개 정리`:''}`,'ok');
   if(viaDir) log(`  에뮬레이터 ROM 폴더에서 ${fmtNum(viaDir)}개를 그 에뮬레이터로 지정`,'ok');
   if(cd.dropped) log(`  ROM 폴더를 지정한 콘솔이라 그 폴더 밖의 게임 ${fmtNum(cd.dropped)}개는 진열하지 않음`);
@@ -1860,12 +1886,13 @@ document.addEventListener('click',async e=>{
     case 'pickfor': return assignPicked(t.dataset.c);
     case 'reveal': return api.reveal(t.dataset.path);
     case 'rmroot': S.roots=S.roots.filter(r=>r!==t.dataset.path); save(); renderScan(); renderStats(); toast('폴더를 뺐어요. 다시 스캔하면 목록에서 정리돼요'); return;
-    case 'rmemu': S.manualEmus=S.manualEmus.filter(x=>x.key!==t.dataset.key); S.customEmus=S.customEmus.filter(x=>x.key!==t.dataset.key); delete S.emuArgs[t.dataset.key]; autoAssign(false); save(); render(); return;
+    case 'rmemu': { const g=S.customEmus.find(x=>x.key===t.dataset.key&&x.guess); if(g) S.ignoreExe=[...(S.ignoreExe||[]),g.path]; }   // 자동 추정을 뺀 것은 다음 스캔에서 다시 넣지 않는다
+      S.manualEmus=S.manualEmus.filter(x=>x.key!==t.dataset.key); S.customEmus=S.customEmus.filter(x=>x.key!==t.dataset.key); delete S.emuArgs[t.dataset.key]; autoAssign(false); save(); render(); return;
     case 'ctog': {const em=S.customEmus.find(x=>x.key===t.dataset.key); if(!em)return; const c=t.dataset.c;
-      em.consoles=em.consoles.includes(c)?em.consoles.filter(x=>x!==c):[...em.consoles,c];
+      em.consoles=em.consoles.includes(c)?em.consoles.filter(x=>x!==c):[...em.consoles,c]; delete em.guess;
       if(em.consoles.includes(c)&&!S.map[c]?.id) S.map[c]={id:em.key,auto:false};
       autoAssign(false); save(); render(); return;}
-    case 'crepath': {const em=S.customEmus.find(x=>x.key===t.dataset.key); const p=em&&await api.pickExe(); if(p){em.path=p;save();render()} return;}
+    case 'crepath': {const em=S.customEmus.find(x=>x.key===t.dataset.key); const p=em&&await api.pickExe(); if(p){em.path=p;delete em.guess;save();render()} return;}
     case 'epath': { const key=t.dataset.key; const p=await api.pickExe(); if(!p) return;
       const man=S.manualEmus.find(x=>x.key===key);
       if(man) man.path=p; else S.emuPath={...(S.emuPath||{}),[key]:p};
@@ -1989,7 +2016,7 @@ document.addEventListener('change',async e=>{
     if(el.value==='__pick'){await assignPicked(cid);return}
     S.map[cid]={id:el.value,auto:false};save();render();toast(`${CONS[cid].name} → ${optLabel(el.value)}`)}
   if(el.dataset.arg){const k=el.dataset.arg; const v=el.value.trim(); if(!v||v===defaultArgs(k))delete S.emuArgs[k]; else S.emuArgs[k]=v; save(); render(); toast(`${optLabel(k)} 실행 인수를 저장했어요`)}
-  if(el.dataset.cname){const em=S.customEmus.find(x=>x.key===el.dataset.cname); if(em&&el.value.trim()){em.name=el.value.trim();save();render()}}
+  if(el.dataset.cname){const em=S.customEmus.find(x=>x.key===el.dataset.cname); if(em&&el.value.trim()){em.name=el.value.trim();delete em.guess;save();render()}}
   if(el.id==='dcons'&&rom){rom.console=el.value;rom.consoleManual=true;delete rom.emu;save();render();refreshOpen({rebuild:true})}
   if(el.dataset.xt!==undefined&&XT){ const p=el.dataset.xt; const n=normDir(p); if(el.checked) XT.checked.set(n,p); else XT.checked.delete(n); renderExclTree(); return; }
   if(el.dataset.cdrec){ const x=(S.consoleDirs[el.dataset.cdrec]||[]).find(y=>y.path===el.dataset.path); if(x){ x.recursive=el.checked; save(); toast(el.checked?'하위 폴더까지 스캔해요. 다시 스캔할게요':'이 폴더 바로 안의 파일만 스캔해요. 다시 스캔할게요'); await rescan(); } return; }

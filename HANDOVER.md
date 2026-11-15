@@ -88,7 +88,8 @@ docs/manual.md, docs/images/   사용 설명서와 화면 그림 (실제 라이�
 주요 키는 이렇다.
 - `roms`: 게임 배열
 - `emus`: 스캔으로 찾은 에뮬레이터
-- `customEmus`, `manualEmus`: 직접 고른 에뮬레이터
+- `customEmus`, `manualEmus`: 직접 고른 에뮬레이터. `customEmus` 중 `guess:true`는 스캔이 버전 정보로 추정해 넣은 것(사용자가 고치면 표시가 지워짐)
+- `ignoreExe`: 자동 추정 에뮬레이터 중 사용자가 뺀 exe 경로 (다시 넣지 않음)
 - `map`: 콘솔 → `{id, auto}`
 - `emuPath`: 에뮬레이터 실행 파일 덮어쓰기
 - `emuArgs`: 실행 인수 덮어쓰기
@@ -142,6 +143,11 @@ docs/manual.md, docs/images/   사용 설명서와 화면 그림 (실제 라이�
      - `EMUS[k].re`가 실행 파일 이름(확장자 뺀 것)과 맞으면 그 에뮬레이터다. `dirRe`가 있으면 폴더 이름도 맞아야 한다.
      - 업데이터·런처 같은 도우미 exe는 `HELPER_EXE`로 뺀다.
      - 같은 에뮬레이터가 여럿이면 `exeScore`가 높은 쪽을 고른다. 64비트, 멀티CPU, Pre-release·Nightly 폴더, np21 계열은 점수를 더한다. NP21/W의 haxm·whpx 폴더는 점수를 깎는다.
+     - **버전 정보**(0.16.21): `rescan()`이 스캔한 exe 전부에 Rust `exe_infos`(GetFileVersionInfoW)를 불러 `opts.exeInfo`로 넘긴다.
+       - `EMUS[k].re`는 파일 이름뿐 아니라 원래 파일 이름·내부 이름·제품 이름에도 맞춰 본다.
+       - `infoScore`: 제품 이름이 에뮬레이터 이름과 같으면 +3, 이름 뒤에 글자가 더 붙은 파생판(PCSX2x6 등)은 −2. 백업·예전 판 폴더 −3, 얕은 폴더를 조금 앞으로.
+       - TeknoParrot(`TeknoParrotUi.exe`) 폴더 안의 exe는 −8 (아케이드 기판용 변형판). 추정 대상에서도 뺀다.
+     - **자동 추정**(`guessEmu`): 이름표에 없는 exe 중 버전 정보에 "emulat"가 있고 도구(`EMU_TOOL`: 런처·관리자·프런트엔드…)가 아닌 것. 콘솔은 `TEXT_CONSOLES` 낱말 표로 고른다. 이미 알아본 에뮬레이터와 같은 폴더의 같은 이름 변형판은 뺀다. 결과 `guessEmus`는 `mergeGuessEmus()`가 `customEmus`에 `guess:true`로 넣는다.
      - RetroArch는 `cores/*_libretro.dll`도 모은다.
    - **롬 분류**: 확장자로 기종을 정하되, 폴더 이름 별칭(`aliases`)이 우선한다. `.zip`, `.bin`, `.iso`처럼 여러 기종이 쓰는 확장자는 폴더 이름으로 판단한다.
    - **이름 해석**(`parseName`):
@@ -159,7 +165,8 @@ docs/manual.md, docs/images/   사용 설명서와 화면 그림 (실제 라이�
 ### 4.3 에뮬레이터 고르기
 
 - `options(console)`: 그 기종을 지원하는 에뮬레이터 목록이다. `EMUS[k].consoles`와 RetroArch 코어의 `CORES`로 정한다.
-- `autoAssign()`: `CONSOLES[i].prefer` 순서로 정한다.
+- `autoAssign()`: `CONSOLES[i].prefer` 순서로 정한다. `prefer`는 0.16.21부터 **에뮬레이션 정확도 순**이다(사용자 요청). 기종별 순서표는 `docs/manual.md` 9.6.
+  - `prefer`에 없는 에뮬레이터(자동 추정 포함)는 `prefer` 중 찾은 것이 하나도 없을 때만 고른다(`ids[0]`).
   - 지원은 하는데 `prefer`에 없는 에뮬레이터는 data.js 끝에서 자동으로 뒤에 붙는다. BizHawk는 항상 맨 뒤다.
   - 자동(`auto:true`)으로 정한 것만 다시 정한다.
 - `emuFor(rom)`: 우선순위는 게임별(`rom.emu`) → ROM 폴더 지정(`rom.dirEmu`) → 콘솔 기본값이다.
@@ -317,6 +324,8 @@ RUSTC_BOOTSTRAP=1 CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-g
 | 기본 설치 위치 탐색 | `installed_emus`가 실제 경로를 찾는지 |
 | Switch 아이콘 | FsType 수정(0.16.7) 뒤 실제 Windows에서 아이콘이 나오는 것은 확인. NSZ·XCZ는 가짜 파일로만 확인 |
 | sm2-emu | 실행(`sm2-emu.exe "롬.zip"`)과 games.xml 읽기는 실제 sm2-emu 파일로 확인. 실제 플레이는 미확인 |
+| 0.16.21에 넣은 에뮬레이터 | gopher64, Mupen64Plus, NanoBoyAdvance, SkyEmu, BGB, Gambatte, WideMelon, Panda3DS(Alber), PCSX-Redux(`-run -iso`), Play!(`--disc`), ClownMDEmu, Ymir, Hollycast, Geargrafx의 exe 이름과 실행 인수는 일반적인 사용법으로 넣었고 실제로 돌려 보지 않았다. 사용자 PC에 있는 것은 simple64X·WideMelon뿐 |
+| 자동 추정 | 사용자 H:\ 기준으로만 맞춰 봄(Anex86만 추정, TeknoParrot 내부 Tekno*는 제외). 다른 환경에서 도구가 에뮬레이터로 잘못 잡히면 `EMU_TOOL`을 넓힌다 |
 
 ## 9. 앞으로 할 만한 일
 

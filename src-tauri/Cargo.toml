@@ -1,6 +1,6 @@
 [package]
 name = "retroshelf"
-version = "0.16.20"
+version = "0.16.21"
 description = "게임 케이스 진열장 형태의 멀티 에뮬레이터 프론트엔드"
 edition = "2021"
 rust-version = "1.77"
@@ -25,7 +25,7 @@ ruzstd = "0.7"
 [target.'cfg(windows)'.dependencies]
 ureq = { version = "2", default-features = false, features = ["tls", "native-certs", "cookies", "native-tls"] }
 native-tls = "0.2"
-windows-sys = { version = "0.52", features = ["Win32_Globalization", "Win32_Foundation"] }
+windows-sys = { version = "0.52", features = ["Win32_Globalization", "Win32_Foundation", "Win32_Storage_FileSystem"] }
 
 [features]
 # 릴리스 빌드에서 화면 파일을 실행 파일 안에 넣는다

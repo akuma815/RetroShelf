@@ -32,6 +32,7 @@
     onCrcProgress: (cb) => listen('crc:progress', (e) => cb(e.payload)),
     switchKeys: (paths) => invoke('switch_keys', { paths }),
     installedEmus: () => invoke('installed_emus'),
+    exeInfos: (paths) => invoke('exe_infos', { paths }),
     bizhawkCores: (exe, pairs) => invoke('bizhawk_cores', { exe, pairs }),
     np2IniSet: (exe, pairs) => invoke('np2_ini_set', { exe, pairs }),
     np2SetFont: (exe, font, raw) => invoke('np2_set_font', { exe, font, raw: !!raw }),
