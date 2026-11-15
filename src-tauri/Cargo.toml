@@ -1,0 +1,39 @@
+[package]
+name = "retroshelf"
+version = "0.16.19"
+description = "게임 케이스 진열장 형태의 멀티 에뮬레이터 프론트엔드"
+edition = "2021"
+rust-version = "1.77"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-clipboard-manager = "2"
+serde = { version = "1", features = ["derive"] }
+png = "0.17"
+flate2 = "1"
+crc32fast = "1"
+aes = "0.8"
+ureq = { version = "2", default-features = false, features = ["tls", "native-certs", "cookies"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+ruzstd = "0.7"
+
+# 윈도우에서는 DuckDuckGo 연결에 윈도우 기본 TLS(SChannel)를 쓴다
+[target.'cfg(windows)'.dependencies]
+ureq = { version = "2", default-features = false, features = ["tls", "native-certs", "cookies", "native-tls"] }
+native-tls = "0.2"
+windows-sys = { version = "0.52", features = ["Win32_Globalization", "Win32_Foundation"] }
+
+[features]
+# 릴리스 빌드에서 화면 파일을 실행 파일 안에 넣는다
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

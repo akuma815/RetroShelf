@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- RetroShelf: 유리문 진열장 안의 게임 케이스 -->
+  <defs>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a4a2a"/><stop offset="1" stop-color="#4a2a17"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff3d6"/><stop offset="1" stop-color="#e9c48a"/>
+    </linearGradient>
+    <linearGradient id="plank" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d79a5c"/><stop offset="1" stop-color="#9c6234"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- 장 몸체 -->
+  <rect x="20" y="14" width="216" height="232" rx="26" fill="url(#wood)"/>
+  <rect x="20" y="14" width="216" height="232" rx="26" fill="none" stroke="#2b170c" stroke-width="4"/>
+  <!-- 위쪽 조명 띠 -->
+  <rect x="40" y="26" width="176" height="9" rx="4.5" fill="#f0a640"/>
+  <!-- 안쪽 (불 켜진 뒷판) -->
+  <rect x="38" y="42" width="180" height="186" rx="10" fill="url(#glow)"/>
+  <!-- 위 칸: 책등처럼 꽂힌 케이스 -->
+  <rect x="50"  y="58" width="22" height="66" rx="3" fill="#c8372d"/>
+  <rect x="76"  y="66" width="22" height="58" rx="3" fill="#2d63d6"/>
+  <rect x="102" y="58" width="22" height="66" rx="3" fill="#1f2430"/>
+  <rect x="128" y="70" width="22" height="54" rx="3" fill="#2e9e5b"/>
+  <!-- 기울어진 케이스 -->
+  <rect x="160" y="62" width="22" height="64" rx="3" fill="#f2b705" transform="rotate(14 171 126)"/>
+  <g fill="#fff" opacity=".85">
+    <rect x="55" y="66" width="12" height="4" rx="2"/><rect x="81" y="74" width="12" height="4" rx="2"/>
+    <rect x="107" y="66" width="12" height="4" rx="2"/><rect x="133" y="78" width="12" height="4" rx="2"/>
+  </g>
+  <!-- 선반 1 -->
+  <rect x="38" y="124" width="180" height="12" fill="url(#plank)"/>
+  <!-- 아래 칸: 앞면이 보이게 꺼낸 케이스와 디스크 -->
+  <rect x="52" y="148" width="58" height="72" rx="4" fill="#1f2430"/>
+  <rect x="58" y="156" width="46" height="34" rx="2" fill="#f0a640"/>
+  <rect x="58" y="196" width="30" height="5" rx="2.5" fill="#fff" opacity=".8"/>
+  <circle cx="160" cy="184" r="34" fill="#cfd5df"/>
+  <circle cx="160" cy="184" r="34" fill="none" stroke="#8b93a3" stroke-width="3"/>
+  <path d="M160 150 a34 34 0 0 1 30 18 L160 184 Z" fill="#fff" opacity=".7"/>
+  <circle cx="160" cy="184" r="10" fill="#7a4a2a"/>
+  <circle cx="160" cy="184" r="4" fill="#e9c48a"/>
+  <!-- 선반 2 -->
+  <rect x="38" y="220" width="180" height="8" fill="url(#plank)"/>
+  <!-- 유리 반사 -->
+  <path d="M38 52 a10 10 0 0 1 10 -10 H120 L38 150 Z" fill="url(#glass)"/>
+</svg>
