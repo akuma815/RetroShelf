@@ -1,8 +1,12 @@
 # RetroShelf (Rust · Tauri)
 
+![RetroShelf 진열장 화면](docs/images/hero.jpg)
+
 게임 케이스를 유리 진열장에 꽂아 두는 형태의 멀티 에뮬레이터 프론트엔드입니다. 폴더를 등록하면 에뮬레이터와 ROM을 찾아 콘솔별 선반에 진열하고, 콘솔마다 실행할 에뮬레이터를 자동으로 붙입니다.
 
-Rust(Tauri 2)로 만들었습니다. 화면은 Windows에 들어 있는 WebView2로 그리기 때문에 실행 파일이 작고(약 4MB) 설치 없이 바로 뜹니다.
+Rust(Tauri 2)로 만들었습니다. 화면은 Windows에 들어 있는 WebView2로 그리기 때문에 실행 파일이 작고(약 5MB) 설치 없이 바로 뜹니다.
+
+> 📖 **[자세한 사용 설명서 보기](docs/manual.md)** — 화면 구성, 게임 실행, 커버 그림, 에뮬레이터·스캔 설정, 기종별 기능, 문제 해결까지 실제 화면 그림과 함께 설명합니다.
 
 ## 실행
 
@@ -314,6 +318,7 @@ Windows의 기본(MSVC) 빌드는 WebView2 로더가 실행 파일 안에 들어
 | `src-tauri/src/arcade.rs` | MAME·FBNeo 원본·클론 |
 | `src-tauri/src/icons.rs`, `nxicon.rs` | 롬 속 아이콘 (NDS·3DS·Switch 등) |
 | `src-tauri/src/cemu.rs` | Cemu 그래픽 팩 |
+| `docs/manual.md`, `docs/images/` | 사용 설명서와 화면 그림 |
 | `HANDOVER.md` | 개발 인계 문서 (구조·동작 흐름·확인 안 된 것) |
 | `CHANGELOG.md` | 버전별 바뀐 점 |
 | `dev/` | 시험용 스크립트 (화면 시험 틀, Switch 시험 파일 만들기) |

@@ -63,6 +63,7 @@ src-tauri/
   tauri.conf.json / Cargo.toml / capabilities/default.json
 .github/workflows/build.yml   태그(v*) 푸시 시 windows-latest에서 cargo tauri build
 dev/                           시험용 스크립트 (아래 7장)
+docs/manual.md, docs/images/   사용 설명서와 화면 그림 (실제 라이브러리에서 찍고 경로는 D:\Games\… 예시로 가림)
 ```
 
 코드 스타일은 이렇다.
